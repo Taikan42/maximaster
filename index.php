@@ -1,6 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
+$APPLICATION->SetTitle("Интернет-магазин \"Нет одежды\"");
 ?>
 <?if (IsModuleInstalled("advertising")):?>
 <?$APPLICATION->IncludeComponent(
@@ -24,7 +24,7 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 		"CACHE_TIME" => "36000000",
 	),
 	false
-);?>
+); ?>
 <?endif?>
 
 <h2>Тренды сезона</h2>
