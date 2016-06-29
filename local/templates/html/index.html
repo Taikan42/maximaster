@@ -8,25 +8,33 @@
 </head>
 <body>
     <header>
-        <div class="head">
-            <h1>Приветствие</h1>
+        <h1>Приветствие</h1>
+        <div class="container navigate-static">
+            <nav>
+                <ul>
+                    <li class="current"><a href="#">Главная</a></li>
+                    <li><a href="#">О себе</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav class="navigate">
-            <ul>
-                <li><a href="">Main</a></li>
-                <li><a href="">О себе</a></li>
-                <li><a href="">Контакты</a></li>
-            </ul>
-        </nav>
     </header>
-    <section class="container">
-        <menu></menu>
-        <main></main>
-        <aside></aside>
+
+    <section class="flex-container">
+        <div class="flex-block">
+            <menu>Левый сайд бар-меню</menu>
+        </div>
+        <div class="flex-block">
+            <main>Основное окно</main>
+        </div>
+        <div class="flex-block">
+            <aside>Правый сайд бар-список</aside>
+        </div>
     </section>
+
     <footer>
-        <div class="foot">
-            <a href="">ФИО</a>
+        <div class="container">
+            <a  href="#">ФИО</a>
         </div>
     </footer>
 </body>
