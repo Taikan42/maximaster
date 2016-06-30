@@ -1,7 +1,8 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
 <?if (!empty($arResult)):?>
-<ul class="left-menu">
+<nav>
+	<ul>
 
 <?
 foreach($arResult as $arItem):
@@ -9,12 +10,13 @@ foreach($arResult as $arItem):
 		continue;
 ?>
 	<?if($arItem["SELECTED"]):?>
-		<li><a href="<?=$arItem["LINK"]?>" class="selected"><?=$arItem["TEXT"]?></a></li>
+		<li><a href="<?=$arItem["LINK"]?>" class="current"><?=$arItem["TEXT"]?></a></li>
 	<?else:?>
 		<li><a href="<?=$arItem["LINK"]?>"><?=$arItem["TEXT"]?></a></li>
 	<?endif?>
 	
 <?endforeach?>
 
-</ul>
+	</ul>
+</nav>
 <?endif?>

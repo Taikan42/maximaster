@@ -16,6 +16,7 @@ a{
 /*HEADER*/
 
 header{
+    position: relative;
     width: 100%;
     text-align: center;
     min-height: 90px;
@@ -34,6 +35,9 @@ header p{
     height: 37px;
     background: rgba(0, 0, 0, 0.45);
 }
+.navigate nav , .navigate ul{
+    height: 37px;
+}
 .navigate-static{
     position: static;
 }
@@ -43,7 +47,6 @@ header p{
     z-index: 1000;
 }
 .navigate nav li{
-    height: 37px;
     display: inline-block;
 }
 nav li a:hover{

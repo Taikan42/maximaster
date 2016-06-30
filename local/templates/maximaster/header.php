@@ -46,6 +46,22 @@
     <section class="flex-container">
         <div class="flex-block left-block">
             <h2>Левый сайд бар-меню</h2>
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:menu",
+                "tree",
+                Array(
+                    "ALLOW_MULTI_SELECT" => "N",
+                    "CHILD_MENU_TYPE" => "left",
+                    "DELAY" => "N",
+                    "MAX_LEVEL" => "3",
+                    "MENU_CACHE_GET_VARS" => array(""),
+                    "MENU_CACHE_TIME" => "3600",
+                    "MENU_CACHE_TYPE" => "N",
+                    "MENU_CACHE_USE_GROUPS" => "Y",
+                    "ROOT_MENU_TYPE" => "left-block",
+                    "USE_EXT" => "N"
+                )
+            );?>
             <?/*$APPLICATION->IncludeComponent("bitrix:menu", "catalog_horizontal", array(
                 "ROOT_MENU_TYPE" => "left",
                 "MENU_CACHE_TYPE" => "A",
