@@ -69,7 +69,7 @@ nav li a{
         position: absolute;
         top: 10px;
         left: 10px;
-        background: url("../images/mob-menu.png") no-repeat;
+        background: url("../../images/mob-menu.png") no-repeat;
         background-size: contain;
         width: 60px;
         height: 60px;

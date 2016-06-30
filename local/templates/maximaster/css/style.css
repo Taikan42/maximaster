@@ -1,11 +1,8 @@
 body{
     font-family: Helvetica, Arial, sans-serif;;
 }
-
 h1{
-    font: small-caps 1.75em Georgia;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    color: #575b45;
+    font-size: 1.75em ;
     padding: 15px 0;
 }
 h2{
@@ -24,6 +21,12 @@ header{
     min-height: 90px;
     background: linear-gradient(to bottom, #ec5d00 0%, #f8faa4 100%);
 }
+header p{
+     font: small-caps 1.75em Georgia;
+     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+     color: #575b45;
+     padding: 15px 0;
+ }
 .navigate{
     display: block;
     width: 100%;
@@ -51,10 +54,10 @@ nav li a{
     display: block;
     color: #ffffff;
     height: 37px;
+    width: 300px;
     padding: 10px 30px;
     background: none;
 }
-
 .navigate nav .current{
     display: none;
 }
