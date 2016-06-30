@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ?>
 <?$APPLICATION->IncludeComponent("bitrix:catalog", "", array(
 	"IBLOCK_TYPE" => "catalog",
-	"IBLOCK_ID" => "2",
+	"IBLOCK_ID" => "4",
 	"TEMPLATE_THEME" => "site",
 	"HIDE_NOT_AVAILABLE" => "N",
 	"BASKET_URL" => "/personal/cart/",
@@ -194,8 +194,8 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	"SIDEBAR_PATH" => "/catalog/sidebar.php",
 	"SEF_URL_TEMPLATES" => array(
 		"sections" => "",
-		"section" => "#SECTION_CODE#/",
-		"element" => "#SECTION_CODE#/#ELEMENT_CODE#/",
+		"section" => "#SECTION_ID#/",
+		"element" => "#SECTION_ID#/#ELEMENT_CODE#/",
 		"compare" => "compare/",
 	)
 	),
