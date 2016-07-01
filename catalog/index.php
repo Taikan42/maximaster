@@ -1,7 +1,13 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ?>
-<?$APPLICATION->IncludeComponent("bitrix:catalog", "", array(
+<?  $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
+        array(
+            
+        ),
+        false
+);?>
+<?/*$APPLICATION->IncludeComponent("bitrix:catalog", "", array(
 	"IBLOCK_TYPE" => "catalog",
 	"IBLOCK_ID" => "4",
 	"TEMPLATE_THEME" => "site",
@@ -200,5 +206,5 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 	)
 	),
 	false
-);?>
+);*/?>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
