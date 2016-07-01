@@ -1,12 +1,32 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ?>
-<?  $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
+<?/*  $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
         array(
             
         ),
         false
-);?>
+);*/?>
+<pre style="text-align: left">
+        <?
+        if (CModule::IncludeModule("iblock")) {
+                $Select = Array("ID","IBLOCK_SECTION_ID", "NAME");
+                $arFilter = Array("IBLOCK_ID" => 4);
+                        $res = CIBlockSection::GetList(
+                        Array(),
+                        $arFilter,
+                        false,
+                        $Select,
+                        false
+                );
+                while ($ob = $res->GetNextElement()) {
+                                $arFields = $ob->GetFields();
+                                print_r($arFields);
+                                $arProps = $ob->GetProperties();
+                                /*print_r($arProps);*/
+                }
+        }?>
+</pre>
 <?/*$APPLICATION->IncludeComponent("bitrix:catalog", "", array(
 	"IBLOCK_TYPE" => "catalog",
 	"IBLOCK_ID" => "4",
