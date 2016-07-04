@@ -18,7 +18,7 @@ $this->addExternalCss("/local/styles.css");?>
             </div>
             <div class="flex-block right-block">
                 <h3 class="title"><?echo $arItem["NAME"]?></h3>
-                <p><?echo $arItem["PRICE"]?></p>
+                <p class="price"><?echo $arItem["PRICE"]?></p>
                 <p><?echo $arItem["PREVIEW_TEXT"]?></p>
             </div>
         </div>

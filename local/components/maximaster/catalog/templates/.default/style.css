@@ -12,7 +12,12 @@
     flex-shrink: 0;
 }
 .catalog .right-block{
-    padding-left: 15px;
     flex-basis: 100%;
     flex-shrink: 1;
+}
+.catalog .price{
+    text-align: center;
+}
+.catalog p{
+    text-align: justify;
 }
