@@ -104,7 +104,7 @@ nav li a{
 }
 .flex-block{
     padding: 0 20px;
-    flex-basis: auto;
+    flex-basis: 100%;
 }
 .left-block, .right-block{
     flex-basis: 25%;

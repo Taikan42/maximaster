@@ -1,0 +1,18 @@
+.catalog .flex-cont{
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: nowrap;
+}
+
+.catalog .left-block{
+    padding: 0;
+    flex-basis: 200px;
+    flex-shrink: 0;
+}
+.catalog .right-block{
+    padding-left: 15px;
+    flex-basis: 100%;
+    flex-shrink: 1;
+}
