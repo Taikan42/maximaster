@@ -14,10 +14,12 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
         </div>
     </div>
     <?foreach($arResult["ELEMENT"] as $arItem):?>
-        <a href="<?echo($arItem["DETAIL_PAGE_URL"]) ?>">
+
             <div class="flex-cont">
                 <div class="flex-block left-block">
-                    <? echo CFile::ShowImage($arItem["PREVIEW_PICTURE"], 100, 100, "border=0", "", false); ?>
+                    <a href="<?echo($arItem["DETAIL_PAGE_URL"]) ?>">
+                        <? echo CFile::ShowImage($arItem["PREVIEW_PICTURE"], 100, 100, "border=0", "", false); ?>
+                    </a>
                 </div>
                 <div class="flex-block right-block">
                     <h3><? echo($arItem["NAME"]); ?>; ?></h3>
@@ -25,7 +27,7 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
                     <p><? echo $arItem["PREVIEW_TEXT"] ?></p>
                 </div>
             </div>
-        </a>
+
     <?endforeach?>
 </section>
 <?endif?>
