@@ -15,6 +15,7 @@ if(CModule::IncludeModule("iblock")) {
         "ID",
         "IBLOCK_ID",
         "IBLOCK_SECTION_ID",
+        "DETAIL_PAGE_URL",
         "NAME",
         "PREVIEW_TEXT",
         "PREVIEW_PICTURE",
@@ -33,6 +34,7 @@ if(CModule::IncludeModule("iblock")) {
     while ($ob = $res->GetNextElement()) {
         $arFields = $ob->GetFields();
         $arResult["ELEMENT"][] = array(
+            "DETAIL_PAGE_URL" => $arFields["DETAIL_PAGE_URL"],
             "NAME" => $arFields["NAME"],
             "PREVIEW_TEXT" => $arFields["PREVIEW_TEXT"],
             "PREVIEW_PICTURE" => $arFields["PREVIEW_PICTURE"],
