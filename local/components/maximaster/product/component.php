@@ -24,18 +24,17 @@ if(CModule::IncludeModule("iblock")) {
         false,
         false,
         $arSelect);
-    while ($ob = $res->GetNextElement()) {
-        $arFields = $ob->GetFields();
-        $arResult = array(
-            "NAME" => $arFields["NAME"],
-            "TEXT" => $arFields["DETAIL_TEXT"],
-            "PICTURE" => $arFields["DETAIL_PICTURE"],
-            "PRICE" => $arFields["PROPERTY_PRICE_VALUE"],
-            "NUMBER" => $arFields["PROPERTY_NUMBER_VALUE"],
-            "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
-        );
-        $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
-    }
+    $ob = $res->GetNextElement();
+    $arFields = $ob->GetFields();
+    $arResult = array(
+        "NAME" => $arFields["NAME"],
+        "TEXT" => $arFields["DETAIL_TEXT"],
+        "PICTURE" => $arFields["DETAIL_PICTURE"],
+        "PRICE" => $arFields["PROPERTY_PRICE_VALUE"],
+        "NUMBER" => $arFields["PROPERTY_NUMBER_VALUE"],
+        "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
+    );
+    $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
     if (!CModule::IncludeModule('highloadblock'));
 //сначала выбрать информацию о ней из базы данных
     $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
