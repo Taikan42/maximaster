@@ -32,9 +32,21 @@ if(CModule::IncludeModule("iblock")) {
             "PICTURE" => $arFields["DETAIL_PICTURE"],
             "PRICE" => $arFields["PROPERTY_PRICE_VALUE"],
             "NUMBER" => $arFields["PROPERTY_NUMBER_VALUE"],
-            "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"],
-            "BRAND" => $arFields["PROPERTY_BRAND_VALUE"]
+            "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
         );
+        $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
     }
+    if (!CModule::IncludeModule('highloadblock'));
+//сначала выбрать информацию о ней из базы данных
+    $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
+//затем инициализировать класс сущности
+    $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+    $hlDataClass = $hldata['NAME'].'Table';
+    $result = $hlDataClass::getList(array(
+        'select' => array('UF_NAME'),
+        'filter' => array('UF_XML_ID'=>$BrandID),
+    ));
+    $res = $result->fetch();
+    $arResult["BREND"] = $res["UF_NAME"];
 }
 $this->IncludeComponentTemplate();
