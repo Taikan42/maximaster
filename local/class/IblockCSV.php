@@ -14,6 +14,8 @@ class IblockCSV
     private $csv_direct = null;
     private $idBlock = null;
     private $codeBlock = null;
+    private $activSectId = array();
+    private $activElemId = array();
 
     public function __construct($csv_file)
     {
@@ -56,6 +58,7 @@ class IblockCSV
                         throw new \Exception("$value[0] не является индификатором");
                 }
             }
+            $this->Deactivation();
             \CIBlockSection::ReSort($this->idBlock);
         }
     }
@@ -118,10 +121,11 @@ class IblockCSV
         $arFields = Array(
             "IBLOCK_SECTION_ID" => $idParent,
             "IBLOCK_ID" => $this->idBlock,
+            "ACTIVE" => "Y",
             "CODE" => $line[2],
             "NAME" => $line[3],
             "SORT" => $line[4],
-            "DETAIL_PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
+            "PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
             /*CFile::SaveFile($arIMAGE, $_SERVER["DOCUMENT_ROOT"] . "/images/$line[5]"),*/
             "DESCRIPTION" => $line[6],
             "DESCRIPTION_TYPE" => "text"
@@ -132,11 +136,15 @@ class IblockCSV
                 "CODE" => $line[2],
             )
         );
+        $ID = null;
         if ($ob = $Emp->GetNext()) {
-            $bs->Update($ob["ID"], $arFields, false);
+            $ID = $ob["ID"];
+            $bs->Update($ID, $arFields, false);
+
         } else {
-            $bs->Add($arFields, false);
+            $ID = $bs->Add($arFields, false);
         }
+        $this->activSectId[] = $ID;
     }
 
     private function ImportElem($line)
@@ -147,16 +155,18 @@ class IblockCSV
             "PRICE" => $line[8],
             "NUMBER" => $line[9],
             "COUNTRY" => $line[10],
-            /*"BRAND"=>$line[11],*/
+            "BRAND" => $line[11]
         );
         $arFields = Array(
             "IBLOCK_SECTION_ID" => $idParent,
             "IBLOCK_ID" => $this->idBlock,
+            "ACTIVE" => "Y",
             "PROPERTY_VALUES" => $PROP,
             "CODE" => $line[2],
             "NAME" => $line[3],
             "SORT" => $line[4],
             "DETAIL_PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
+            "PREVIEW_PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
             "PREVIEW_TEXT" => $line[6],
             "DETAIL_TEXT" => $line[7]
         );
@@ -166,10 +176,37 @@ class IblockCSV
                 "CODE" => $line[2],
             )
         );
+        $ID = null;
         if ($ob = $Emp->GetNext()) {
-            $el->Update($ob["ID"], $arFields, false);
+            $ID = $ob["ID"];
+            $el->Update($ID, $arFields, false);
         } else {
-            $el->Add($arFields, false);
+            $ID = $el->Add($arFields, false);
+        }
+        $this->activElemId[] = $ID;
+    }
+    private function Deactivation(){
+        $D = new \CIBlockElement;
+        $arFilter = Array(
+            "ID"=>$this->activSectId,
+            "ACTIVE"=>"Y"
+        );
+        $res = \CIBlockElement::GetList(
+            Array(),
+            $arFilter
+        );
+        while($ob = $res->GetNext())
+        {
+            $D->Update($ob["ID"], Array("ACTIVE" => "N"), false);
+        }
+        $D = new \CIBlockSection;
+        $res = \CIBlockSection::GetList(
+            Array(),
+            $arFilter
+        );
+        while($ob = $res->GetNext())
+        {
+            $D->Update($ob["ID"], Array("ACTIVE" => "N"), false);
         }
     }
 }
