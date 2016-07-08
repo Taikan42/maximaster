@@ -79,7 +79,7 @@ class IblockCSV
             $this->codeBlock = $line[1];//получаем код
             $this->idBlock = $ob["ID"];//получаем ид
             $ib->Update($this->idBlock, $arFields);//обновляем инфоблок
-        } else {
+        } else {654
             throw new \Exception("Инфоблок $line[1] не найден");
         }
     }
