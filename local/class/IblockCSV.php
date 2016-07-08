@@ -9,6 +9,18 @@ class IblockCSV
     private $codeBlock = null;
     private $activSectId = array();
     private $activElemId = array();
+    const IDENTIFIER = 0;
+    const PARENT_CODE = 1;
+    const CODE = 2;
+    const NAME = 3;
+    const SORT = 4;
+    const IMAGE = 5;
+    const PREVIEW_TEXT = 6;
+    const DETAIL_TEXT = 7;
+    const PRICE = 8;
+    const NUMBER = 9;
+    const COUNTRY = 10;
+    const BREND = 11;
 
     public function __construct($csv_file)
     {
@@ -43,21 +55,20 @@ class IblockCSV
         if (\CModule::IncludeModule("iblock")) {
             $data_array = $this->getCSV();//Получаем массив данных
             foreach ($data_array as $value) {//цикл по массиву
-                switch ($value[0]) {//смотрим индификатор строки
+                switch ($value[self::IDENTIFIER]) {//смотрим индификатор строки
                     case "iblock":
                         $this->ImportIB($value);//получаем id и символьный код инфоблока
                         break;
                     case "section":
-                        $this->ImportSect($value);//импортируем раздщел
+                        $this->ImportSect($value);//импортируем раздел
                         break;
                     case "element":
                         $this->ImportElem($value);//импортируем элемент
                         break;
                     default:
-                        throw new \Exception("$value[0] не является индификатором");
+                        throw new \Exception("$value[0] не является идентификатором");
                 }
             }
-            $this->Deactivation();//деактивируем разделы и элементы инфоблока не присутствующие в csv
             \CIBlockSection::ReSort($this->idBlock);//сортируем разделы
         }
     }
@@ -72,8 +83,8 @@ class IblockCSV
         $ib = new \CIBlock;
         //Заполняем поля для обновления
         $arFields = Array(
-            "NAME" => $line[2],
-            "CODE" => $line[1],
+            "NAME" => $line[self::CODE],
+            "CODE" => $line[self::PARENT_CODE],
             "IBLOCK_TYPE_ID" => "content",
             "DESCRIPTION_TYPE" => "text"
         );
@@ -81,16 +92,17 @@ class IblockCSV
         $Emp = \CIBlock::GetList(
             Array(),
             Array(
-                "CODE" => $line[1],
+                "CODE" => $line[self::PARENT_CODE],
             )
         );
         //Проверяем наличие инфоблока
         if ($ob = $Emp->GetNext()) {
-            $this->codeBlock = $line[1];//получаем код
+            $this->codeBlock = $line[self::PARENT_CODE];//получаем код
             $this->idBlock = $ob["ID"];//получаем ид
             $ib->Update($this->idBlock, $arFields);//обновляем инфоблок
+            $this->Deactivation();//деактивируем разделы и элементы инфоблока
         } else {
-            throw new \Exception("Инфоблок $line[1] не найден");
+            throw new \Exception("Инфоблок". $line[self::PARENT_CODE] ."не найден");
         }
     }
 
@@ -133,24 +145,24 @@ class IblockCSV
         //иницифлизируем раздел
         $bs = new \CIBlockSection;
         //ищем родителя
-        $idParent = $this->Parent($line[1], $line[2]);
+        $idParent = $this->Parent($line[self::PARENT_CODE], $line[self::CODE]);
         //заполняем поля для обновления/добавления
         $arFields = Array(
             "IBLOCK_SECTION_ID" => $idParent,
             "IBLOCK_ID" => $this->idBlock,
             "ACTIVE" => "Y",
-            "CODE" => $line[2],
-            "NAME" => $line[3],
-            "SORT" => $line[4],
-            "PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
-            "DESCRIPTION" => $line[6],
+            "CODE" => $line[self::CODE],
+            "NAME" => $line[self::NAME],
+            "SORT" => $line[self::SORT],
+            "PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/" . $line[self::IMAGE]),
+            "DESCRIPTION" => $line[self::PREVIEW_TEXT],
             "DESCRIPTION_TYPE" => "text"
         );
         //ищем раздел
         $Emp = \CIBlockSection::GetList(
             Array(),
             Array(
-                "CODE" => $line[2],
+                "CODE" => $line[self::CODE],
             )
         );
         $ID = null;
@@ -175,32 +187,32 @@ class IblockCSV
         //инициализируем элемент
         $el = new \CIBlockElement;
         //ищем родителя
-        $idParent = $this->Parent($line[1], $line[2]);
+        $idParent = $this->Parent($line[self::PARENT_CODE], $line[self::CODE]);
         //заполняем поля для обновления/добавления
         $PROP = array(
-            "PRICE" => $line[8],
-            "NUMBER" => $line[9],
-            "COUNTRY" => $line[10],
-            "BRAND" => $line[11]
+            "PRICE" => $line[self::PRICE],
+            "NUMBER" => $line[self::NUMBER],
+            "COUNTRY" => $line[self::COUNTRY],
+            "BRAND" => $line[self::BREND]
         );
         $arFields = Array(
             "IBLOCK_SECTION_ID" => $idParent,
             "IBLOCK_ID" => $this->idBlock,
             "ACTIVE" => "Y",
             "PROPERTY_VALUES" => $PROP,
-            "CODE" => $line[2],
-            "NAME" => $line[3],
-            "SORT" => $line[4],
+            "CODE" => $line[self::CODE],
+            "NAME" => $line[self::NAME],
+            "SORT" => $line[self::SORT],
             "DETAIL_PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
             "PREVIEW_PICTURE" => \CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"] . "/local/images/$line[5]"),
-            "PREVIEW_TEXT" => $line[6],
-            "DETAIL_TEXT" => $line[7]
+            "PREVIEW_TEXT" => $line[self::PREVIEW_TEXT],
+            "DETAIL_TEXT" => $line[self::DETAIL_TEXT]
         );
         //ищем элемент
         $Emp = \CIBlockElement::GetList(
             Array(),
             Array(
-                "CODE" => $line[2],
+                "CODE" => $line[self::CODE],
             )
         );
         $ID = null;
@@ -213,17 +225,15 @@ class IblockCSV
         }
         $this->activElemId[] = $ID;//заполняем массив активных элементов
     }
-    
+
     /**
      * Деактивируем разделы и элементы
      */
     private function Deactivation()
     {
         $D = new \CIBlockElement;//инициализируем элемент
-        //Фильтр поиска по активным элементам инфоблока не включенных в список активности
         $arFilter = Array(
             "IBLOCK_ID" => $this->idBlock,
-            "!ID" => $this->activElemId,
             "ACTIVE" => "Y"
         );
         //ищем элементы
@@ -236,11 +246,6 @@ class IblockCSV
         }
         $D = new \CIBlockSection;//инициализируем раздел
         //Фильтр поиска по активным разделам инфоблока не включенных в список активности
-        $arFilter = Array(
-            "IBLOCK_ID" => $this->idBlock,
-            "!ID" => $this->activSectId,
-            "ACTIVE" => "Y"
-        );
         //ищем разделы
         $res = \CIBlockSection::GetList(
             Array(),
