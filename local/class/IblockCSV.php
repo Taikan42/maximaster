@@ -7,8 +7,6 @@ class IblockCSV
     private $csv_direct = null;
     private $idBlock = null;
     private $codeBlock = null;
-    private $activSectId = array();
-    private $activElemId = array();
     const IDENTIFIER = 0;
     const PARENT_CODE = 1;
     const CODE = 2;
@@ -168,13 +166,11 @@ class IblockCSV
         $ID = null;
         //проверяем наличие раздела
         if ($ob = $Emp->GetNext()) {
-            $ID = $ob["ID"];
-            $bs->Update($ID, $arFields, false);//обновляем сушествующий раздел
+            $bs->Update($ob["ID"], $arFields, false);//обновляем сушествующий раздел
 
         } else {
-            $ID = $bs->Add($arFields, false);//создаем раздел
+            $bs->Add($arFields, false);//создаем раздел
         }
-        $this->activSectId[] = $ID;//заполняем массив активных секций
     }
 
     /**
@@ -218,12 +214,10 @@ class IblockCSV
         $ID = null;
         //проверяем наличие элемента
         if ($ob = $Emp->GetNext()) {
-            $ID = $ob["ID"];
-            $el->Update($ID, $arFields, false);//обновляем сушествующий элемнт
+            $el->Update($ob["ID"], $arFields, false);//обновляем сушествующий элемнт
         } else {
-            $ID = $el->Add($arFields, false);//создаем элемент
+            $el->Add($arFields, false);//создаем элемент
         }
-        $this->activElemId[] = $ID;//заполняем массив активных элементов
     }
 
     /**
