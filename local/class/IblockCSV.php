@@ -64,7 +64,7 @@ class IblockCSV
                         $this->ImportElem($value);//импортируем элемент
                         break;
                     default:
-                        throw new \Exception("$value[0] не является идентификатором");
+                        throw new \Exception($value[self::IDENTIFIER] . "не является идентификатором");
                 }
             }
             \CIBlockSection::ReSort($this->idBlock);//сортируем разделы
@@ -100,7 +100,7 @@ class IblockCSV
             $ib->Update($this->idBlock, $arFields);//обновляем инфоблок
             $this->Deactivation();//деактивируем разделы и элементы инфоблока
         } else {
-            throw new \Exception("Инфоблок". $line[self::PARENT_CODE] ."не найден");
+            throw new \Exception("Инфоблок" . $line[self::PARENT_CODE] . "не найден");
         }
     }
 
@@ -212,11 +212,24 @@ class IblockCSV
             )
         );
         $ID = null;
+        $arPriceFields = Array(
+            "CATALOG_GROUP_ID" => 1,
+            "CURRENCY" => "RUB",
+            "PRICE" => $line[self::PRICE]
+        );
         //проверяем наличие элемента
         if ($ob = $Emp->GetNext()) {
-            $el->Update($ob["ID"], $arFields, false);//обновляем сушествующий элемнт
+            $ID = $ob["ID"];
+            $el->Update($ID, $arFields, false);//обновляем сушествующий элемнт
+            \CCatalogProduct::Update($ID, ["QUANTITY" => $line[self::NUMBER]]);
+            $res = \CPrice::GetList([],["PRODUCT_ID" => $ID,"CATALOG_GROUP_ID" => 1]);
+            $arr = $res->Fetch();
+            \CPrice::Update($arr["ID"], $arPriceFields);
         } else {
-            $el->Add($arFields, false);//создаем элемент
+            $ID = $el->Add($arFields, false);//создаем элемент
+            \CCatalogProduct::Add(["ID" => $ID, "QUANTITY" => $line[self::NUMBER]]);
+            $arPriceFields["PRODUCT_ID"] = $ID;
+            \CPrice::Add($arPriceFields);
         }
     }
 
