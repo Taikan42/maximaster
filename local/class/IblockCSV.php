@@ -19,7 +19,10 @@ class IblockCSV
         }
     }
 
-    /*Получаем массив данных из CSV*/
+    /**
+     * Получаем массив данных из CSV
+     * @return array
+     */
     private function getCSV()
     {
         $handle = fopen($this->csv_direct, "r");//открываем файл для чтения
@@ -31,7 +34,10 @@ class IblockCSV
         return $array_csv;
     }
 
-    /*Импортируем данные в инфоблок*/
+    /**
+     * Импортируем данные в инфоблок
+     * @throws \Exception
+     */
     public function Import()
     {
         if (\CModule::IncludeModule("iblock")) {
@@ -56,7 +62,11 @@ class IblockCSV
         }
     }
 
-    /*Получение id и символьного кода инфоблока*/
+    /**
+     * Получение id и символьного кода инфоблока
+     * @param $line
+     * @throws \Exception
+     */
     private function ImportIB($line)
     {
         $ib = new \CIBlock;
@@ -84,7 +94,13 @@ class IblockCSV
         }
     }
 
-    /*Возвращает id родителя*/
+    /**
+     * Возвращает id родителя
+     * @param $codeParent
+     * @param $codeChild
+     * @return string
+     * @throws \Exception
+     */
     private function Parent($codeParent, $codeChild)
     {
         $idParent = "";//Если каталог корневой то id будет пустым
@@ -107,7 +123,11 @@ class IblockCSV
         return $idParent;
     }
 
-    /*Импортируем раздел*/
+    /**
+     * Импортируем раздел
+     * @param $line
+     * @throws \Exception
+     */
     private function ImportSect($line)
     {
         //иницифлизируем раздел
@@ -145,7 +165,11 @@ class IblockCSV
         $this->activSectId[] = $ID;//заполняем массив активных секций
     }
 
-    /*Импортируем элемент*/
+    /**
+     * Импортируем элемент
+     * @param $line string
+     * @throws \Exception
+     */
     private function ImportElem($line)
     {
         //инициализируем элемент
@@ -189,8 +213,10 @@ class IblockCSV
         }
         $this->activElemId[] = $ID;//заполняем массив активных элементов
     }
-
-    /*Деактивируем разделы и элементы*/
+    
+    /**
+     * Деактивируем разделы и элементы
+     */
     private function Deactivation()
     {
         $D = new \CIBlockElement;//инициализируем элемент
