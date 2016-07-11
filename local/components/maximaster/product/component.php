@@ -29,12 +29,15 @@ if(CModule::IncludeModule("iblock")) {
             "CATALOG_GROUP_ID" => 1]
     );
     $arr = $CPres->Fetch();
-    $prise = \CPrice::GetByID($arr["ID"])["PRICE"];
+    $arrCprise = \CPrice::GetByID($arr["ID"]);
+    $prise = $arrCprise["PRICE"];
+    $currency = $arrCprise["CURRENCY"];
     $arResult = array(
         "NAME" => $arFields["NAME"],
         "TEXT" => $arFields["DETAIL_TEXT"],
         "PICTURE" => $arFields["DETAIL_PICTURE"],
         "PRICE" => $prise,
+        "CURRENCY" => $currency,
         "NUMBER" => \CCatalogProduct::GetByID($arFields["ID"])["QUANTITY"],
         "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
     );

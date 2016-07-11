@@ -9,7 +9,7 @@ $APPLICATION->SetTitle($arResult["NAME"]);
                 <? echo CFile::ShowImage($arResult["PICTURE"], 200, 200, "border=0", "", false); ?>
             </div>
             <div class="flex-block right-block">
-                <p class="price"><?echo $arResult["PRICE"]?> р.</p>
+                <p class="price"><?echo $arResult["PRICE"]?> <?echo $arResult["CURRENCY"]?>.</p>
                 <ul>
                     <li>Количество: <?echo $arResult["NUMBER"]?></li>
                     <li>Страна: <?echo $arResult["COUNTRY"]?></li>
