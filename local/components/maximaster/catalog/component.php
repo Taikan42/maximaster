@@ -37,13 +37,16 @@ if(CModule::IncludeModule("iblock")) {
             "CATALOG_GROUP_ID" => 1]
         );
         $arr = $CPres->Fetch();
-        $prise = \CPrice::GetByID($arr["ID"])["PRICE"];
+        $arrCprise = \CPrice::GetByID($arr["ID"]);
+        $prise = $arrCprise["PRICE"];
+        $currency = $arrCprise["CURRENCY"];
         $arResult["ELEMENT"][] = array(
             "DETAIL_PAGE_URL" => $arFields["DETAIL_PAGE_URL"],
             "NAME" => $arFields["NAME"],
             "PREVIEW_TEXT" => $arFields["PREVIEW_TEXT"],
             "PREVIEW_PICTURE" => $arFields["PREVIEW_PICTURE"],
-            "PRICE" => $prise
+            "PRICE" => $prise,
+            "CURRENCY" => $currency
         );
     }
 

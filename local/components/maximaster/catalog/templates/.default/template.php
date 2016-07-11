@@ -23,7 +23,7 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
                 </div>
                 <div class="flex-block right-block">
                     <h3><? echo($arItem["NAME"]); ?></h3>
-                    <p class="price"><? echo $arItem["PRICE"] ?>р.</p>
+                    <p class="price"><? echo $arItem["PRICE"] ?> <?echo $arItem["CURRENCY"]?>.</p>
                     <p><? echo $arItem["PREVIEW_TEXT"] ?></p>
                 </div>
             </div>
