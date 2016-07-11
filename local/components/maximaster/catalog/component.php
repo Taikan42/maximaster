@@ -18,9 +18,8 @@ if(CModule::IncludeModule("iblock")) {
         "DETAIL_PAGE_URL",
         "NAME",
         "PREVIEW_TEXT",
-        "PREVIEW_PICTURE",
-        "PROPERTY_PRICE",
-    );//IBLOCK_ID и ID обязательно должны быть указаны, см. описание arSelectFields выше
+        "PREVIEW_PICTURE"
+    );
     $arFilter = Array(
         "SECTION_ID" => $idSECTION,
         "INCLUDE_SUBSECTIONS" => "Y"
@@ -33,13 +32,20 @@ if(CModule::IncludeModule("iblock")) {
         $arSelect);
     while ($ob = $res->GetNextElement()) {
         $arFields = $ob->GetFields();
+        $CPres = \CPrice::GetList([],[
+            "PRODUCT_ID" => $arFields["ID"],
+            "CATALOG_GROUP_ID" => 1]
+        );
+        $arr = $CPres->Fetch();
+        $prise = \CPrice::GetByID($arr["ID"])["PRICE"];
         $arResult["ELEMENT"][] = array(
             "DETAIL_PAGE_URL" => $arFields["DETAIL_PAGE_URL"],
             "NAME" => $arFields["NAME"],
             "PREVIEW_TEXT" => $arFields["PREVIEW_TEXT"],
             "PREVIEW_PICTURE" => $arFields["PREVIEW_PICTURE"],
-            "PRICE" => $arFields["PROPERTY_PRICE_VALUE"],
+            "PRICE" => $prise
         );
     }
+
 }
 $this->IncludeComponentTemplate();

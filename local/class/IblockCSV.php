@@ -163,7 +163,6 @@ class IblockCSV
                 "CODE" => $line[self::CODE],
             )
         );
-        $ID = null;
         //проверяем наличие раздела
         if ($ob = $Emp->GetNext()) {
             $bs->Update($ob["ID"], $arFields, false);//обновляем сушествующий раздел
