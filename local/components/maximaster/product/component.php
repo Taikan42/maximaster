@@ -10,8 +10,6 @@ if(CModule::IncludeModule("iblock")) {
         "NAME",
         "DETAIL_TEXT",
         "DETAIL_PICTURE",
-        "PROPERTY_PRICE",
-        "PROPERTY_NUMBER",
         "PROPERTY_COUNTRY",
         "PROPERTY_BRAND"
     );
@@ -26,14 +24,21 @@ if(CModule::IncludeModule("iblock")) {
         $arSelect);
     $ob = $res->GetNextElement();
     $arFields = $ob->GetFields();
+    $CPres = \CPrice::GetList([],[
+            "PRODUCT_ID" => $arFields["ID"],
+            "CATALOG_GROUP_ID" => 1]
+    );
+    $arr = $CPres->Fetch();
+    $prise = \CPrice::GetByID($arr["ID"])["PRICE"];
     $arResult = array(
         "NAME" => $arFields["NAME"],
         "TEXT" => $arFields["DETAIL_TEXT"],
         "PICTURE" => $arFields["DETAIL_PICTURE"],
-        "PRICE" => $arFields["PROPERTY_PRICE_VALUE"],
-        "NUMBER" => $arFields["PROPERTY_NUMBER_VALUE"],
+        "PRICE" => $prise,
+        "NUMBER" => \CCatalogProduct::GetByID($arFields["ID"])["QUANTITY"],
         "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
     );
+
     $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
     if (!CModule::IncludeModule('highloadblock'));
 //сначала выбрать информацию о ней из базы данных
