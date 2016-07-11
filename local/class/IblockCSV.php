@@ -220,13 +220,34 @@ class IblockCSV
         //проверяем наличие элемента
         if ($ob = $Emp->GetNext()) {
             $ID = $ob["ID"];
-            $el->Update($ID, $arFields, false);//обновляем сушествующий элемнт
+
+            /*
+            \CCatalogProduct::Update($ID, ["QUANTITY" => $line[self::NUMBER]]);
+            $res = \CPrice::GetList([],["PRODUCT_ID" => $ID,"CATALOG_GROUP_ID" => 1]);
+            $arr = $res->Fetch();
+            \CPrice::Update($arr["ID"], $arPriceFields);
+            */
+        } else {
+            $ID = $el->Add($arFields, false);//создаем элемент
+
+            /*
+            \CCatalogProduct::Add(["ID" => $ID, "QUANTITY" => $line[self::NUMBER]]);
+            $arPriceFields["PRODUCT_ID"] = $ID;
+            \CPrice::Add($arPriceFields);
+            */
+        }
+        $Emp = \CCatalogProduct::GetList(
+            array(),
+            array("ID" => $ID),
+            false,
+            array()
+        );
+        if ($ob = $Emp->GetNext()){
             \CCatalogProduct::Update($ID, ["QUANTITY" => $line[self::NUMBER]]);
             $res = \CPrice::GetList([],["PRODUCT_ID" => $ID,"CATALOG_GROUP_ID" => 1]);
             $arr = $res->Fetch();
             \CPrice::Update($arr["ID"], $arPriceFields);
         } else {
-            $ID = $el->Add($arFields, false);//создаем элемент
             \CCatalogProduct::Add(["ID" => $ID, "QUANTITY" => $line[self::NUMBER]]);
             $arPriceFields["PRODUCT_ID"] = $ID;
             \CPrice::Add($arPriceFields);
