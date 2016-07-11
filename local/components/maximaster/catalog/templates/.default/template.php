@@ -27,7 +27,6 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
                     <p><? echo $arItem["PREVIEW_TEXT"] ?></p>
                 </div>
             </div>
-
     <?endforeach?>
 </section>
 <?endif?>

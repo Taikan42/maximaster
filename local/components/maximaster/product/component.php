@@ -41,7 +41,6 @@ if(CModule::IncludeModule("iblock")) {
         "NUMBER" => \CCatalogProduct::GetByID($arFields["ID"])["QUANTITY"],
         "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
     );
-
     $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
     if (!CModule::IncludeModule('highloadblock'));
 //сначала выбрать информацию о ней из базы данных

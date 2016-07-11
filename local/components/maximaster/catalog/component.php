@@ -49,6 +49,5 @@ if(CModule::IncludeModule("iblock")) {
             "CURRENCY" => $currency
         );
     }
-
 }
 $this->IncludeComponentTemplate();
