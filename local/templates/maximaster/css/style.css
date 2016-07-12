@@ -91,6 +91,9 @@ nav li a{
     .mobile-icon:hover .navigate{
         display: block;
     }
+    .navigate nav , .navigate ul{
+        height: auto;
+    }
 }
 
 /*MAIN*/

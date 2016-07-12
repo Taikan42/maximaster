@@ -78,6 +78,7 @@
                 "ALLOW_MULTI_SELECT" => "N",
             ),
                 false
-            );*/?> </div>
+            );*/?>
+        </div>
         <div class="flex-block">
             <h1><?=$APPLICATION->ShowTitle(false);?></h1>
