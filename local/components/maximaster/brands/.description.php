@@ -1,7 +1,6 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: STANKEVICH
- * Date: 11.07.2016
- * Time: 12:12
- */
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+$arComponentDescription = array(
+    "NAME" => GetMessage("Бренды"),
+    "DESCRIPTION" => GetMessage("список брендов")
+);
+?>

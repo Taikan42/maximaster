@@ -26,9 +26,11 @@ $APPLICATION->SetTitle("Интернет-магазин \"Нет одежды\""
 	false
 ); ?>
 <?endif?>
-
-<h2>Тренды сезона</h2>
-<?$APPLICATION->IncludeComponent(
+<? $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
+	array(),
+	false
+); ?>
+<?/*$APPLICATION->IncludeComponent(
 	"bitrix:catalog.section",
 	".default",
 	array(
@@ -150,5 +152,5 @@ $APPLICATION->SetTitle("Интернет-магазин \"Нет одежды\""
 		"MESSAGE_404" => ""
 	),
 	false
-);?>
+);*/?>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

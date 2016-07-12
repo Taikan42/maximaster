@@ -3,7 +3,6 @@ ini_set('display_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 if(CModule::IncludeModule("iblock")) {
     $idBLOCK = $_GET["ID"];
-    $res = CIBlockElement::GetByID($idBLOCK);
     $arSelect = Array(
         "ID",
         "IBLOCK_ID",

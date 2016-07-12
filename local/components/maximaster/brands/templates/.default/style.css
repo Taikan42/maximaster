@@ -1,0 +1,10 @@
+.brands li {
+    text-align: left;
+    padding-left: 3em;
+}
+.brands a{
+    color: black;
+}
+.brands a:hover{
+    color: #959595;
+}

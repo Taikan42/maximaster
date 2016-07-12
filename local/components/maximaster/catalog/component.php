@@ -1,15 +1,46 @@
-<?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 ini_set('display_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
-if(CModule::IncludeModule("iblock")) {
+if (CModule::IncludeModule("iblock")) {
     $idSECTION = $_GET["SECTION_ID"];
     $arResult["SECTION"] = array();
     $arResult["ELEMENT"] = array();
-    $res = CIBlockSection::GetByID($idSECTION);
-    if ($ar_res = $res->GetNext()) {
-        $arResult["SECTION"]["NAME"] = $ar_res['NAME'];
-        $arResult["SECTION"]["DESCRIPTION"] = $ar_res['DESCRIPTION'];
-        $arResult["SECTION"]["PICTURE"] = $ar_res['PICTURE'];
+    if ($idSECTION) {
+        $res = CIBlockSection::GetByID($idSECTION);
+        if ($ar_res = $res->GetNext()) {
+            $arResult["CHECK_SECTION"] = true;
+            $arResult["SECTION"]["NAME"] = $ar_res['NAME'];
+            $arResult["SECTION"]["DESCRIPTION"] = $ar_res['DESCRIPTION'];
+            $arResult["SECTION"]["PICTURE"] = $ar_res['PICTURE'];
+        }
+        $arFilter = Array(
+            "SECTION_ID" => $idSECTION,
+            "INCLUDE_SUBSECTIONS" => "Y"
+        );
+    } else {
+        $XMLBRAND = $_GET["BRAND"];
+        $arResult["CHECK_SECTION"] = false;
+        if ($XMLBRAND){
+            if (!CModule::IncludeModule('highloadblock'));
+            $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
+            $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+            $hlDataClass = $hldata['NAME'].'Table';
+            $result = $hlDataClass::getList(array(
+                'select' => array('UF_NAME'),
+                'filter' => array('UF_XML_ID'=>$XMLBRAND),
+            ));
+            $res = $result->fetch();
+            $arResult["SECTION"]["NAME"] = $res["UF_NAME"];
+            $arFilter = Array(
+                "PROPERTY_BRAND" => $XMLBRAND
+            );
+        } else {
+            $arResult["SECTION"]["NAME"] = CIBlock::GetByID(4)->GetNext()["NAME"];
+            $arFilter = Array(
+                "IBLOCK_ID" => 4,
+                "INCLUDE_SUBSECTIONS" => "Y"
+            );
+        }
     }
     $arSelect = Array(
         "ID",
@@ -20,10 +51,6 @@ if(CModule::IncludeModule("iblock")) {
         "PREVIEW_TEXT",
         "PREVIEW_PICTURE"
     );
-    $arFilter = Array(
-        "SECTION_ID" => $idSECTION,
-        "INCLUDE_SUBSECTIONS" => "Y"
-    );
     $res = CIBlockElement::GetList(
         Array(),
         $arFilter,
@@ -32,9 +59,9 @@ if(CModule::IncludeModule("iblock")) {
         $arSelect);
     while ($ob = $res->GetNextElement()) {
         $arFields = $ob->GetFields();
-        $CPres = \CPrice::GetList([],[
-            "PRODUCT_ID" => $arFields["ID"],
-            "CATALOG_GROUP_ID" => 1]
+        $CPres = \CPrice::GetList([], [
+                "PRODUCT_ID" => $arFields["ID"],
+                "CATALOG_GROUP_ID" => 1]
         );
         $arr = $CPres->Fetch();
         $arrCprise = \CPrice::GetByID($arr["ID"]);
