@@ -1,0 +1,6 @@
+.filter table{
+    margin: auto;
+}
+.filter table ,.filter td ,.filter tr{
+    border: 2px solid #47c5b9;
+}

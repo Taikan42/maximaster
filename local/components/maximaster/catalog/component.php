@@ -42,6 +42,9 @@ if (CModule::IncludeModule("iblock")) {
             );
         }
     }
+    if($GLOBALS["arrFilter"]){
+        $arFilter = array_merge($arFilter, $GLOBALS["arrFilter"]);
+    }
     $arSelect = Array(
         "ID",
         "IBLOCK_ID",
