@@ -8,7 +8,7 @@
     </div>
 </section>
 <footer>
-    <a href="#">ФИО</a>
+    <a href="mailto:a.stankevich@maximaster.ru?subject=<?echo $_SERVER["SERVER_NAME"] . $_SERVER['REQUEST_URI']?>">ФИО</a>
 </footer>
 <script src="<?=SITE_TEMPLATE_PATH?>/apps/menu-sticked.js"></script>
 </body>
