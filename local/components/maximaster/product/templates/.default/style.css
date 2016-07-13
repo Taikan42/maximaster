@@ -33,3 +33,17 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     padding-top: 15px;
 }
+.product .options{
+    float: left;
+}
+.product .form{
+    text-align: center;
+    padding-top: 2em;
+}
+.product .form a{
+    padding: 0.5em;
+    border: 2px solid #959595;
+    border-radius: 4px;
+    background: #74c545;
+    color: white;
+}

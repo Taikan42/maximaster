@@ -32,6 +32,7 @@ if(CModule::IncludeModule("iblock")) {
     $prise = $arrCprise["PRICE"];
     $currency = $arrCprise["CURRENCY"];
     $arResult = array(
+        "ID" => $arFields["ID"],
         "NAME" => $arFields["NAME"],
         "TEXT" => $arFields["DETAIL_TEXT"],
         "PICTURE" => $arFields["DETAIL_PICTURE"],
