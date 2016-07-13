@@ -38,10 +38,7 @@ $APPLICATION->SetTitle($arResult["NAME"]);
         $.ajax({
             type: 'POST',
             url: "/local/templates/maximaster/cart/addbasket_ajax.php",
-            data: {id: ID, quantity: clv,},
-            success: function (result) {
-                window.location.reload();
-            }
+            data: {id: ID, quantity: clv,}
         });
     }
 </script>
