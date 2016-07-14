@@ -18,13 +18,8 @@ $APPLICATION->SetTitle($arResult["NAME"]);
                     </ul>
                 </div>
                 <div class="form">
-                    <form action="" method="post">
-                        <input type="text" class="input1" id="QUANTITY" name="quantity" value="1" size="5">
-                        <input type="hidden" name="id" value=<?echo $arResult["ID"];?>>
-                        <a href="#add2basket" class="buy_botton1" onclick="add2basket(<?echo $arResult["ID"];?>), PopUpShow()">в корзину</a>
-                        <input type="hidden" name="country" id="COUNTRY" value="<?echo $arResult["COUNTRY"];?>">
-                        <input type="hidden" name="brand" id="BRAND" value="<?echo $arResult["BRAND"];?>">
-                    </form>
+                    <input type="text" class="QUANTITY" name="quantity" value="1" size="5">
+                    <button id="<?echo $arResult["ID"];?>">в корзину</button>
                 </div>
             </div>
         </div>
@@ -37,25 +32,3 @@ $APPLICATION->SetTitle($arResult["NAME"]);
         </div>
     </section>
 <?endif?>
-<script>
-    $(document).ready(function(){
-        PopUpHide();
-    });
-    function PopUpShow(){
-        $("#popup1").show();
-    }
-    function PopUpHide(){
-        $("#popup1").hide();
-    }
-    function add2basket(ID)
-    {
-        var clv = $("#QUANTITY").attr("value");
-        var Country = $("#COUNTRY").attr("value");
-        var Brand = $("#BRAND").attr("value");
-        $.ajax({
-            type: 'POST',
-            url: "/local/templates/maximaster/cart/addbasket_ajax.php",
-            data: {id: ID, quantity: clv, country: Country, brand: Brand}
-        });
-    }
-</script>

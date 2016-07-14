@@ -63,9 +63,7 @@ if (CModule::IncludeModule("iblock")) {
         "DETAIL_PAGE_URL",
         "NAME",
         "PREVIEW_TEXT",
-        "PREVIEW_PICTURE",
-        "PROPERTY_COUNTRY",
-        "PROPERTY_BRAND"
+        "PREVIEW_PICTURE"
     );
     $res = CIBlockElement::GetList(
         Array(),
@@ -74,7 +72,6 @@ if (CModule::IncludeModule("iblock")) {
         false,
         $arSelect);
     $elements_ID = array();
-    $BRAND_XML_ID = array();
     while ($ob = $res->GetNext()) {
         $elements_ID[] = $ob["ID"];
         $arResult["ELEMENT"][$ob["ID"]] = array(
@@ -83,9 +80,7 @@ if (CModule::IncludeModule("iblock")) {
             "NAME" => $ob["NAME"],
             "PREVIEW_TEXT" => $ob["PREVIEW_TEXT"],
             "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"],
-            "COUNTRY" => $ob["PROPERTY_COUNTRY_VALUE"]
         );
-        $BRAND_XML_ID[$ob["ID"]] = $ob["PROPERTY_BRAND_VALUE"];
     }
     $res = \CPrice::GetList(
         [],
@@ -97,17 +92,6 @@ if (CModule::IncludeModule("iblock")) {
     while ($ob = $res->GetNext()) {
         $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
         $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
-    }
-    $BRAND_ID_FILTER = array_unique($BRAND_XML_ID);//убираем повторяющиеся xml id
-    $result = $hlDataClass::getList(array(
-        'select' => array("UF_NAME", "UF_XML_ID"),
-        'filter' => array('UF_XML_ID' => $BRAND_ID_FILTER)
-    ));
-    while ($res = $result->fetch()) {
-        $arrID_element = array_keys($BRAND_XML_ID, $res["UF_XML_ID"]);//Получаем массив ID элементов с данным XML ID бренда
-        foreach ($arrID_element as $value) {
-            $arResult["ELEMENT"][$value]["BRAND"] = $res["UF_NAME"];
-        }
     }
 }
 $this->IncludeComponentTemplate();

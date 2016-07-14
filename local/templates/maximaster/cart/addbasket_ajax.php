@@ -1,17 +1,34 @@
 <? require_once ($_SERVER['DOCUMENT_ROOT']."/bitrix/modules/main/include.php");?>
 <?
 if (CModule::IncludeModule("sale") && CModule::IncludeModule("catalog")) {
-    if (isset($_POST['id'])&&isset($_POST['quantity'])&&isset($_POST['country'])&&isset($_POST['brand'])) {
+    if (isset($_POST['id'])&&isset($_POST['quantity'])) {
         $PRODUCT_ID = intval($_POST['id']);
         $QUANTITY = intval($_POST['quantity']);
+        $res = CIBlockElement::GetList(
+            Array(),
+            ["ID" => $PRODUCT_ID],
+            false,
+            false,
+            ["ID", "IBLOCK_ID", "PROPERTY_COUNTRY", "PROPERTY_BRAND"]
+        );
+        $res = $res->fetch();
+        if (!CModule::IncludeModule('highloadblock'));
+        $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($res["IBLOCK_ID"])->fetch();
+        $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+        $hlDataClass = $hldata['NAME'].'Table';
+        $result = $hlDataClass::getList(array(
+            'select' => array('UF_NAME'),
+            'filter' => array('UF_XML_ID'=>$res["PROPERTY_BRAND_VALUE"]),
+        ));
+        $result = $result->fetch();
         $PROP = array(
             array(
                 "NAME" => "Страна",
-                "VALUE" => $_POST['country']
+                "VALUE" => $res["PROPERTY_COUNTRY_VALUE"]
             ),
             array(
                 "NAME" => "Бренд",
-                "VALUE" => $_POST['brand']
+                "VALUE" => $result["UF_NAME"]
             )
         );
         Add2BasketByProductID(

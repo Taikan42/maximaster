@@ -43,9 +43,7 @@ if(CModule::IncludeModule("iblock")) {
     );
     $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
     if (!CModule::IncludeModule('highloadblock'));
-//сначала выбрать информацию о ней из базы данных
     $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
-//затем инициализировать класс сущности
     $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
     $hlDataClass = $hldata['NAME'].'Table';
     $result = $hlDataClass::getList(array(
