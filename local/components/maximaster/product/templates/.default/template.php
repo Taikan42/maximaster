@@ -1,7 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 $APPLICATION->SetTitle($arResult["NAME"]);
 ?>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <?if (!empty($arResult)):?>
     <section class="product">
         <h3><?echo $arResult["NAME"]?></h3>

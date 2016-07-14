@@ -7,6 +7,9 @@
     <title><?$APPLICATION->ShowTitle()?></title>
     <link type="text/css" rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/reset.css" />
     <link type="text/css" rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/style.css" />
+    <?
+    CJSCore::Init(array("jquery"));
+    ?>
 </head>
 <body>
 <?$APPLICATION->ShowPanel();?>

@@ -26,7 +26,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ); ?>
 <?endif?>
 <? $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
-	array(),
+	array("IBLOCK_ID" => "4"),
 	false
 ); ?>
 <?/*$APPLICATION->IncludeComponent(

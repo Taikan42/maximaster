@@ -6,28 +6,33 @@ if (CModule::IncludeModule("iblock")) {
     $arResult["SECTION"] = array();
     $arResult["ELEMENT"] = array();
     if ($idSECTION) {
-        $res = CIBlockSection::GetByID($idSECTION);
-        if ($ar_res = $res->GetNext()) {
-            $arResult["CHECK_SECTION"] = true;
-            $arResult["SECTION"]["NAME"] = $ar_res['NAME'];
-            $arResult["SECTION"]["DESCRIPTION"] = $ar_res['DESCRIPTION'];
-            $arResult["SECTION"]["PICTURE"] = $ar_res['PICTURE'];
-        }
+        $arResult["CHECK_SECTION"] = true;//Если выводятся элементы раздела- выводить описание раздела
+        $res = CIBlockSection::getList(
+            ["SORT" => "ASC"],
+            ["ID" => $idSECTION],
+            false,
+            ["NAME", "DESCRIPTION", "PICTURE"],
+            false
+        );
+        $res = $res->fetch();
+        $arResult["SECTION"]["NAME"] = $res['NAME'];
+        $arResult["SECTION"]["DESCRIPTION"] = $res['DESCRIPTION'];
+        $arResult["SECTION"]["PICTURE"] = $res['PICTURE'];
         $arFilter = Array(
             "SECTION_ID" => $idSECTION,
             "INCLUDE_SUBSECTIONS" => "Y"
         );
     } else {
         $XMLBRAND = $_GET["BRAND"];
-        $arResult["CHECK_SECTION"] = false;
-        if ($XMLBRAND){
-            if (!CModule::IncludeModule('highloadblock'));
-            $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
+        $arResult["CHECK_SECTION"] = false; //не выводить описание раздела
+        if ($XMLBRAND) {
+            if (!CModule::IncludeModule('highloadblock')) ;
+            $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($arParams["IBLOCK_ID"])->fetch();
             $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
-            $hlDataClass = $hldata['NAME'].'Table';
+            $hlDataClass = $hldata['NAME'] . 'Table';
             $result = $hlDataClass::getList(array(
                 'select' => array('UF_NAME'),
-                'filter' => array('UF_XML_ID'=>$XMLBRAND),
+                'filter' => array('UF_XML_ID' => $XMLBRAND),
             ));
             $res = $result->fetch();
             $arResult["SECTION"]["NAME"] = $res["UF_NAME"];
@@ -35,14 +40,20 @@ if (CModule::IncludeModule("iblock")) {
                 "PROPERTY_BRAND" => $XMLBRAND
             );
         } else {
-            $arResult["SECTION"]["NAME"] = CIBlock::GetByID(4)->GetNext()["NAME"];
+            $res = CIBlock::getList(
+                [],
+                ["ID" => $arParams["IBLOCK_ID"]],
+                false
+            );
+            $res = $res->fetch();
+            $arResult["SECTION"]["NAME"] = $res["NAME"];
             $arFilter = Array(
-                "IBLOCK_ID" => 4,
+                "IBLOCK_ID" => $arParams["IBLOCK_ID"],
                 "INCLUDE_SUBSECTIONS" => "Y"
             );
         }
     }
-    if($GLOBALS["arrFilter"]){
+    if ($GLOBALS["arrFilter"]) {
         $arFilter = array_merge($arFilter, $GLOBALS["arrFilter"]);
     }
     $arSelect = Array(
@@ -60,24 +71,27 @@ if (CModule::IncludeModule("iblock")) {
         false,
         false,
         $arSelect);
-    while ($ob = $res->GetNextElement()) {
-        $arFields = $ob->GetFields();
-        $CPres = \CPrice::GetList([], [
-                "PRODUCT_ID" => $arFields["ID"],
-                "CATALOG_GROUP_ID" => 1]
+    $elements_ID = array();
+    while ($ob = $res->GetNext()) {
+        $elements_ID[] = $ob["ID"];
+        $arResult["ELEMENT"][$ob["ID"]] = array(
+            "ID" => $ob["ID"],
+            "DETAIL_PAGE_URL" => $ob["DETAIL_PAGE_URL"],
+            "NAME" => $ob["NAME"],
+            "PREVIEW_TEXT" => $ob["PREVIEW_TEXT"],
+            "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"]
         );
-        $arr = $CPres->Fetch();
-        $arrCprise = \CPrice::GetByID($arr["ID"]);
-        $prise = $arrCprise["PRICE"];
-        $currency = $arrCprise["CURRENCY"];
-        $arResult["ELEMENT"][] = array(
-            "DETAIL_PAGE_URL" => $arFields["DETAIL_PAGE_URL"],
-            "NAME" => $arFields["NAME"],
-            "PREVIEW_TEXT" => $arFields["PREVIEW_TEXT"],
-            "PREVIEW_PICTURE" => $arFields["PREVIEW_PICTURE"],
-            "PRICE" => $prise,
-            "CURRENCY" => $currency
-        );
+    }
+    $res = \CPrice::GetList(
+        [],
+        ["PRODUCT_ID" => $elements_ID, "CATALOG_GROUP_ID" => 1],
+        false,
+        false,
+        ["PRODUCT_ID", "PRICE", "CURRENCY"]
+    );
+    while ($ob = $res->GetNext()) {
+        $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
+        $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
     }
 }
 $this->IncludeComponentTemplate();
