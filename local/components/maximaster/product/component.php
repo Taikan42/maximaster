@@ -53,6 +53,6 @@ if(CModule::IncludeModule("iblock")) {
         'filter' => array('UF_XML_ID'=>$BrandID),
     ));
     $res = $result->fetch();
-    $arResult["BREND"] = $res["UF_NAME"];
+    $arResult["BRAND"] = $res["UF_NAME"];
 }
 $this->IncludeComponentTemplate();

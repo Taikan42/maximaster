@@ -54,8 +54,7 @@
     background: #74c545;
     color: white;
 }
-
-.catalog .popup {
+.popup {
     width: 100%;
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -65,7 +64,7 @@
     left: 0px;
 }
 
-.catalog .popup-content {
+.popup-content {
     margin: 250px auto 0px auto;
     width: 250px;
     padding: 10px;
@@ -73,7 +72,7 @@
     border-radius: 5px;
     box-shadow: 0px 0px 10px #000;
 }
-.catalog .popup-content a{
+.popup-content a{
     display: block;
     padding: 0.5em;
     border: 2px solid #959595;

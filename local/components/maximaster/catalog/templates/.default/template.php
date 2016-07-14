@@ -24,7 +24,9 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
                 <div class="flex-block right-block">
                     <h3><? echo($arItem["NAME"]); ?></h3>
                     <p class="price"><? echo $arItem["PRICE"] ?> <? echo $arItem["CURRENCY"] ?>.</p>
-                    <a href="#" class="buy_botton1" onclick="add2basket(<?echo $arItem["ID"]; ?>), PopUpShow()">в корзину</a>
+                        <a href="#" class="buy_botton1" onclick="add2basket(<?echo $arItem["ID"]; ?>), PopUpShow()">в корзину</a>
+                        <input type="hidden" name="country" id="COUNTRY" value="<?echo $arItem["COUNTRY"];?>">
+                        <input type="hidden" name="brand" id="BRAND" value="<?echo $arItem["BRAND"];?>">
                     <p><? echo $arItem["PREVIEW_TEXT"] ?></p>
                 </div>
             </div>
@@ -39,25 +41,23 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
 <? endif ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        //Скрыть PopUp при загрузке страницы
         PopUpHide();
     });
-    //Функция отображения PopUp
     function PopUpShow(){
         $("#popup1").show();
     }
-    //Функция скрытия PopUp
     function PopUpHide(){
         $("#popup1").hide();
     }
     function add2basket(ID)
     {
-        var id = ID;
         var clv = 1;
+        var Country = $("#COUNTRY").attr("value");
+        var Brand = $("#BRAND").attr("value");
         $.ajax({
             type: 'POST',
             url: "/local/templates/maximaster/cart/addbasket_ajax.php",
-            data: {id: ID, quantity: clv,}
+            data: {id: ID, quantity: clv, country: Country, brand: Brand}
         });
     }
 </script>

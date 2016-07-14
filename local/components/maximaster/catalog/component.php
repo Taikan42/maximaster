@@ -5,6 +5,10 @@ if (CModule::IncludeModule("iblock")) {
     $idSECTION = $_GET["SECTION_ID"];
     $arResult["SECTION"] = array();
     $arResult["ELEMENT"] = array();
+    if (!CModule::IncludeModule('highloadblock')) ;
+    $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($arParams["IBLOCK_ID"])->fetch();
+    $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+    $hlDataClass = $hldata['NAME'] . 'Table';
     if ($idSECTION) {
         $arResult["CHECK_SECTION"] = true;//Если выводятся элементы раздела- выводить описание раздела
         $res = CIBlockSection::getList(
@@ -26,10 +30,6 @@ if (CModule::IncludeModule("iblock")) {
         $XMLBRAND = $_GET["BRAND"];
         $arResult["CHECK_SECTION"] = false; //не выводить описание раздела
         if ($XMLBRAND) {
-            if (!CModule::IncludeModule('highloadblock')) ;
-            $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($arParams["IBLOCK_ID"])->fetch();
-            $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
-            $hlDataClass = $hldata['NAME'] . 'Table';
             $result = $hlDataClass::getList(array(
                 'select' => array('UF_NAME'),
                 'filter' => array('UF_XML_ID' => $XMLBRAND),
@@ -63,7 +63,9 @@ if (CModule::IncludeModule("iblock")) {
         "DETAIL_PAGE_URL",
         "NAME",
         "PREVIEW_TEXT",
-        "PREVIEW_PICTURE"
+        "PREVIEW_PICTURE",
+        "PROPERTY_COUNTRY",
+        "PROPERTY_BRAND"
     );
     $res = CIBlockElement::GetList(
         Array(),
@@ -72,6 +74,7 @@ if (CModule::IncludeModule("iblock")) {
         false,
         $arSelect);
     $elements_ID = array();
+    $BRAND_XML_ID = array();
     while ($ob = $res->GetNext()) {
         $elements_ID[] = $ob["ID"];
         $arResult["ELEMENT"][$ob["ID"]] = array(
@@ -79,8 +82,10 @@ if (CModule::IncludeModule("iblock")) {
             "DETAIL_PAGE_URL" => $ob["DETAIL_PAGE_URL"],
             "NAME" => $ob["NAME"],
             "PREVIEW_TEXT" => $ob["PREVIEW_TEXT"],
-            "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"]
+            "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"],
+            "COUNTRY" => $ob["PROPERTY_COUNTRY_VALUE"]
         );
+        $BRAND_XML_ID[$ob["ID"]] = $ob["PROPERTY_BRAND_VALUE"];
     }
     $res = \CPrice::GetList(
         [],
@@ -92,6 +97,17 @@ if (CModule::IncludeModule("iblock")) {
     while ($ob = $res->GetNext()) {
         $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
         $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
+    }
+    $BRAND_ID_FILTER = array_unique($BRAND_XML_ID);//убираем повторяющиеся xml id
+    $result = $hlDataClass::getList(array(
+        'select' => array("UF_NAME", "UF_XML_ID"),
+        'filter' => array('UF_XML_ID' => $BRAND_ID_FILTER)
+    ));
+    while ($res = $result->fetch()) {
+        $arrID_element = array_keys($BRAND_XML_ID, $res["UF_XML_ID"]);//Получаем массив ID элементов с данным XML ID бренда
+        foreach ($arrID_element as $value) {
+            $arResult["ELEMENT"][$value]["BRAND"] = $res["UF_NAME"];
+        }
     }
 }
 $this->IncludeComponentTemplate();
