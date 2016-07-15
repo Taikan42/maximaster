@@ -8,7 +8,13 @@ $(document).ready(function(){
         var id = $(this).attr('id');
         var quantity = $('.QUANTITY').attr('value');
         add2basket(id, quantity);
-    })
+    });
+    $('.popup').click(function (){
+        PopUpHide();
+    });
+    $('a.continue').click(function () {
+        PopUpHide();
+    });
 });
 function PopUpShow(){
     $("#popup1").show();

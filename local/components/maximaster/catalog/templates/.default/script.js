@@ -7,7 +7,13 @@ $(document).ready(function(){
         PopUpShow();
         var id = $(this).attr('id');
         add2basket(id, 1);
-    })
+    });
+    $('.popup').click(function (){
+        PopUpHide();
+    });
+    $('a.continue').click(function () {
+        PopUpHide();
+    });
 });
 function PopUpShow(){
     $("#popup1").show();
