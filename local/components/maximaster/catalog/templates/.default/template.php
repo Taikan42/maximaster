@@ -24,7 +24,7 @@ $APPLICATION->SetTitle($arResult["SECTION"]["NAME"]);
                 <div class="flex-block right-block">
                     <h3><? echo($arItem["NAME"]); ?></h3>
                     <p class="price"><? echo $arItem["PRICE"] ?> <? echo $arItem["CURRENCY"] ?>.</p>
-                    <button data-parameter="<?echo $arResult["ID"];?>">в корзину</button>
+                    <button id="<?echo $arItem["ID"];?>">в корзину</button>
                     <p><? echo $arItem["PREVIEW_TEXT"] ?></p>
                 </div>
             </div>

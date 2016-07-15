@@ -5,8 +5,8 @@ $(document).ready(function(){
     PopUpHide();
     $('button').click(function () {
         PopUpShow();
-        var id = $(this).attr("data-parameter");
-        add2basket(id);
+        var id = $(this).attr('id');
+        add2basket(id, 1);
     })
 });
 function PopUpShow(){
@@ -15,12 +15,11 @@ function PopUpShow(){
 function PopUpHide(){
     $("#popup1").hide();
 }
-function add2basket(ID)
+function add2basket(ID, QUANTITY)
 {
-    var clv = 1;
     $.ajax({
         type: 'POST',
         url: "/local/templates/maximaster/cart/addbasket_ajax.php",
-        data: {id: ID, quantity: clv}
+        data: {id: ID, quantity: QUANTITY}
     });
 }

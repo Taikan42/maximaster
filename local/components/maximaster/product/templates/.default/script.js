@@ -5,7 +5,7 @@ $(document).ready(function(){
     PopUpHide();
     $('button').click(function () {
         PopUpShow();
-        var id = this.attr('id');
+        var id = $(this).attr('id');
         var quantity = $('.QUANTITY').attr('value');
         add2basket(id, quantity);
     })
