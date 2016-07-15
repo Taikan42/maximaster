@@ -1,6 +1,7 @@
 .filter table{
     margin: auto;
+    width: 100%;
 }
 .filter table ,.filter td ,.filter tr{
-    border: 2px solid #47c5b9;
+    border: 2px outset #aeaeae;
 }
