@@ -1,0 +1,16 @@
+.form-order table{
+    margin: auto;
+    min-width: 370px;
+    text-align: left;
+}
+.form-order table td+td{
+    padding: 5px;
+}
+.form-order input, select{
+    width: 100%;
+    height: 20px;
+    border-radius: 4px;
+}
+.form-order select{
+    height: 25px;
+}
