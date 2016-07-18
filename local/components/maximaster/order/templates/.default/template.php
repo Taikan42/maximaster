@@ -9,7 +9,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="name">Имя: </label>
                 </td>
                 <td>
-                    <input type="text" id="name"/>
+                    <input type="text" id="name" class="empty_field"/>
                 </td>
             </tr>
             <tr>
@@ -17,7 +17,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="surname">Фамилия: </label>
                 </td>
                 <td>
-                    <input type="text" id="surname"/>
+                    <input type="text" id="surname" class="empty_field"/>
                 </td>
             </tr>
             <tr>
@@ -25,7 +25,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="middle_name">Отчество: </label>
                 </td>
                 <td>
-                    <input id="middle_name"/>
+                    <input id="middle_name" class="empty_field"/>
                 </td>
             </tr>
             <tr>
@@ -33,7 +33,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="user_phone">Телефон: </label>
                 </td>
                 <td>
-                    <input type="text" id="user_phone" />
+                    <input type="text" id="user_phone" class="empty_field"/>
                 </td>
             </tr>
             <tr>
@@ -41,7 +41,8 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="user_email">Email: </label>
                 </td>
                 <td>
-                    <input type="text" id="user_email">
+                    <input type="text" placeholder="" id="user_email" class="empty_field"/>
+                    <p></p>
                 </td>
             </tr>
             <tr>

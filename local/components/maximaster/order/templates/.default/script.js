@@ -3,16 +3,31 @@ jQuery(function($){
     $('#user_phone').mask("+7(999) 999-99-99");
 });
 $(document).ready(function() {
+
+    $('input').blur(function() {
+        if ($(this).val()){
+            $(this).css("border-color","green");
+            $(this).removeClass('empty_field');
+        } else {
+            $(this).css("border-color","red");
+            $(this).addClass('empty_field');
+        }
+    });
     $('#user_email').blur(function() {
         if($(this).val() != '') {
             var pattern = /.+@.+\..+/i;
             if(pattern.test($(this).val())){
-
+                $(this).css("border-color","green");
+                $(this).removeClass('empty_field');
+                $(this).next().html("");
             } else {
-
+                $(this).css("border-color","red");
+                $(this).addClass('empty_field');
+                $(this).next().html("неккоректный email");
             }
         } else {
-            // Поле email пустое
+            $(this).css("border-color","red");
+            $(this).addClass('empty_field');
         }
     });
 });
