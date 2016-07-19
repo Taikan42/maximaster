@@ -3,15 +3,21 @@
     min-width: 350px;
     text-align: left;
 }
+.form-order table td{
+    vertical-align: middle;
+}
 .form-order table td+td{
     padding: 5px;
 
 }
-.form-order input, select{
+.form-order input, select, textarea{
     width: 100%;
-    height: 20px;
+    min-height: 20px;
     border-radius: 4px;
     margin-bottom: 7px;
+}
+.form-order input[type="radio"]{
+    width: auto;
 }
 .form-order input+p{
     text-align: center;
@@ -19,4 +25,11 @@
 }
 .form-order select{
     height: 25px;
+}
+.form-order .submit{
+    width: 130px;
+    height: 25px;
+    border-radius: 7px;
+    font-size: 1.05em;
+    cursor: pointer;
 }
