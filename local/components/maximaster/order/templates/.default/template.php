@@ -2,7 +2,7 @@
 $APPLICATION->SetTitle("Оформить заказ");
 ?>
 <div class="form-order">
-    <form action="" class="order" id="sale_order" method="post">
+    <form action="<?$arResult['ACTION_URL']?>" class="order" id="sale_order" method="post">
         <table>
             <tr>
                 <td>
@@ -55,10 +55,10 @@ $APPLICATION->SetTitle("Оформить заказ");
             </tr>
             <tr>
                 <td>
-                    <span>Получение: </span>
+                    <label for="delivery">Получение: </label>
                 </td>
                 <td>
-                    <select name="delivery" class="delivery">
+                    <select name="delivery" class="delivery" id="delivery">
                         <option value="COURIER" selected>Курьерская доставка</option>
                         <option value="MAIL">Почта России</option>
                         <option value="PICKUP" >Самовывоз</option>
@@ -67,18 +67,18 @@ $APPLICATION->SetTitle("Оформить заказ");
             </tr>
             <tr>
                 <td>
-                    <span>Способ оплаты: </span>
+                    <label for="payment_type">Способ оплаты: </label>
                 </td>
                 <td>
-                    <select name="payment_type" class="payment_type">
+                    <select name="payment_type" class="payment_type" id="payment_type">
                         <option value="NON_CASH" selected>Безналичный</option>
                         <option value="CASH" >Наличный</option>
                     </select>
                     <p>
-                        <input type="radio" name="non-cash" value="SBER" checked /> <span>Сбербанк</span> </br>
-                        <input type="radio" name="non-cash" value="GASPROM"/> <span>Газпромбанк</span> </br>
-                        <input type="radio" name="non-cash" value="VISA"/> <span>VISA и MasterCard</span> </br>
-                        <input type="radio" name="non-cash" value="PAYPAL"/> <span>PayPal</span> </br>
+                        <input type="radio" name="non-cash" value="SBER" checked /> <span>Сбербанк</span> <br>
+                        <input type="radio" name="non-cash" value="GASPROM"/> <span>Газпромбанк</span> <br>
+                        <input type="radio" name="non-cash" value="VISA"/> <span>VISA и MasterCard</span> <br>
+                        <input type="radio" name="non-cash" value="PAYPAL"/> <span>PayPal</span> <br>
                     </p>
                 </td>
             </tr>
