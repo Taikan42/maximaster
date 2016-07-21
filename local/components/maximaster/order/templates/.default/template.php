@@ -2,7 +2,7 @@
 $APPLICATION->SetTitle("Оформить заказ");
 ?>
 <div class="form-order">
-    <form action="<?$arResult['ACTION_URL']?>" class="order" id="sale_order" method="post">
+    <form action="<?echo $arResult["ACTION_URL"]?>" class="order" id="sale_order" method="post">
         <table>
             <tr>
                 <td>
@@ -72,7 +72,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                 <td>
                     <select name="payment_type" class="payment_type" id="payment_type">
                         <option value="NON_CASH" selected>Безналичный</option>
-                        <option value="CASH" >Наличный</option>
+                        <option value="CASH" disabled>Наличный</option>
                     </select>
                     <p>
                         <input type="radio" name="non-cash" value="SBER" checked /> <span>Сбербанк</span> <br>
