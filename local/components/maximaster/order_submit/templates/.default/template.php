@@ -1,5 +1,5 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
-$APPLICATION->SetTitle("Оформить заказ");
+$APPLICATION->SetTitle("");
 ?>
 <? if (!empty($arResult)): ?>
     <div class="order_submit">

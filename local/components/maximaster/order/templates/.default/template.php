@@ -2,7 +2,7 @@
 $APPLICATION->SetTitle("Оформить заказ");
 ?>
 <div class="form-order">
-    <form action="<?echo $arResult["ACTION_URL"]?>" class="order" id="sale_order" method="post">
+    <form action="<? echo $arResult["ACTION_URL"] ?>" class="order" id="sale_order" method="post">
         <table>
             <tr>
                 <td>
@@ -58,11 +58,17 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="delivery">Получение: </label>
                 </td>
                 <td>
-                    <select name="delivery" class="delivery" id="delivery">
+                    <? foreach ($arResult["DELIVERY"] as $arItem): ?>
+                        <div class="radio_wrap">
+                            <input type="radio" name="Delivery"
+                                   value="<? echo $arItem["ID"] ?>"/> <? echo $arItem["LOGOTIP"] ?>
+                        </div>
+                    <? endforeach; ?>
+                    <? /*<select name="delivery" class="delivery" id="delivery">
                         <option value="COURIER" selected>Курьерская доставка</option>
                         <option value="MAIL">Почта России</option>
                         <option value="PICKUP" >Самовывоз</option>
-                    </select>
+                    </select>*/ ?>
                 </td>
             </tr>
             <tr>
@@ -70,7 +76,13 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="payment_type">Способ оплаты: </label>
                 </td>
                 <td>
-                    <select name="payment_type" class="payment_type" id="payment_type">
+                    <? foreach ($arResult["PAYMENT"] as $arItem): ?>
+                        <div class="radio_wrap">
+                            <input type="radio" name="Payment"
+                                   value="<? echo $arItem["ID"] ?>"/> <? echo $arItem["LOGOTIP"] ?>
+                        </div>
+                    <? endforeach; ?>
+                    <? /*<select name="payment_type" class="payment_type" id="payment_type">
                         <option value="NON_CASH" selected>Безналичный</option>
                         <option value="CASH" disabled>Наличный</option>
                     </select>
@@ -79,7 +91,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                         <input type="radio" name="non-cash" value="GASPROM"/> <span>Газпромбанк</span> <br>
                         <input type="radio" name="non-cash" value="VISA"/> <span>VISA и MasterCard</span> <br>
                         <input type="radio" name="non-cash" value="PAYPAL"/> <span>PayPal</span> <br>
-                    </p>
+                    </p>*/ ?>
                 </td>
             </tr>
         </table>

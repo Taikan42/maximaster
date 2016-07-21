@@ -18,6 +18,10 @@
 }
 .form-order input[type="radio"]{
     width: auto;
+    height: 50px;
+}
+.form-order .radio_wrap{
+    display: inline-block;
 }
 .form-order input+p{
     text-align: center;
@@ -29,6 +33,7 @@
 .form-order .submit{
     width: 130px;
     height: 25px;
+    margin-top: 20px;
     border-radius: 7px;
     font-size: 1.05em;
     cursor: pointer;
