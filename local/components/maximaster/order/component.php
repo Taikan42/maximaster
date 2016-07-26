@@ -14,7 +14,7 @@ if (CModule::IncludeModule("sale")) {
         ),
         false,
         false,
-        array("ID", "NAME", "DESCRIPTION", "LOGOTIP", "PRICE")
+        array("ID", "NAME", "DESCRIPTION", "LOGOTIP")
     );
     while ($delob = $delres->Fetch()) {
         $ID = $delob["ID"];
@@ -22,8 +22,7 @@ if (CModule::IncludeModule("sale")) {
             "ID" => $ID,
             /*"NAME" => $delob["NAME"],
             "DESCRIPTION" => $delob["DESCRIPTION"],*/
-            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100,"alt=\"".$delob["NAME"]."\"","",true,$delob["DESCRIPTION"]),
-            "PRICE" => $delob["PRICE"]
+            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100,"alt=\"".$delob["NAME"]."\"","",true,$delob["DESCRIPTION"])
         );
     }
     $payres = CSalePaySystem::GetList(
