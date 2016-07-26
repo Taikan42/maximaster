@@ -31,7 +31,6 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
     $delivery = array();
     $payment = array();
     if (CModule::IncludeModule("sale")) {
-        CModule::IncludeModule("catalog");
         $delres = CSaleDelivery::GetList(
             array(),
             array(
