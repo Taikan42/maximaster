@@ -1,9 +1,9 @@
-
+/*Проверка телефона*/
 jQuery(function($){
     $('#user_phone').mask("+7(999) 999-99-99");
 });
 $(document).ready(function() {
-
+    /*Проверка и выделение пустых полей*/
     $('.form_text').blur(function() {
         if ($(this).val()){
             $(this).css("border-color","green");
@@ -13,6 +13,7 @@ $(document).ready(function() {
             $(this).addClass('empty_field');
         }
     });
+    /*Проверка и выделение для email*/
     $('#user_email').blur(function() {
         if($(this).val() != '') {
             var pattern = /.+@.+\..+/i;
@@ -30,6 +31,7 @@ $(document).ready(function() {
             $(this).addClass('empty_field');
         }
     });
+    /*Деактивация принятия формы при пустых полях*/
     $('input').blur(function () {
         if($('form').find('.empty_field').size() > 0){
             $('.submit').attr('disabled','disabled');
@@ -37,39 +39,7 @@ $(document).ready(function() {
             $('.submit').removeAttr('disabled');
         }
     });
-    $('select').change(function () {
-        var select = $(this);
-        switch (select.attr('name')){
-            case 'delivery':
-                if (select.val()!="PICKUP"){
-                    $('.payment_type option:selected').each(function(){
-                        this.selected=false;
-                    });
-                    $(".payment_type [value='NON_CASH']").attr("selected", "selected");
-                    $(".payment_type [value='CASH']").attr("disabled", "disabled");
-                    Shownoncash(true);
-                } else {
-                    $(".payment_type [value='CASH']").removeAttr('disabled');
-                }
-                break;
-            case 'payment_type':
-                if (select.val()=="CASH"){
-                    Shownoncash(false);
-                } else {
-                    Shownoncash(true);
-                }
-                break;
-        }
-    });
 });
-function Shownoncash(check) {
-    var noncash = $('.payment_type').next();
-    if(check) {
-        noncash.show();
-    } else {
-        noncash.hide();
-    }
-}
 
 !function (a) {
     "function" == typeof define && define.amd ? define(["jquery"], a) : a("object" == typeof exports ? require("jquery") : jQuery)

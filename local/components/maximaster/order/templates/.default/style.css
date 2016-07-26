@@ -10,11 +10,10 @@
     padding: 5px;
 
 }
-.form-order input, select, textarea{
+.form-order input, textarea{
     width: 100%;
     min-height: 20px;
     border-radius: 4px;
-    margin-bottom: 7px;
 }
 .form-order input[type="radio"]{
     width: auto;
@@ -26,9 +25,6 @@
 .form-order input+p{
     text-align: center;
     color: #959595;
-}
-.form-order select{
-    height: 25px;
 }
 .form-order .submit{
     width: 130px;
