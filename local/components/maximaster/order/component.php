@@ -16,15 +16,28 @@ if (CModule::IncludeModule("sale")) {
         false,
         array("ID", "NAME", "DESCRIPTION", "LOGOTIP")
     );
+    $delID = array();
     while ($delob = $delres->Fetch()) {
         $ID = $delob["ID"];
+        $delID[] = $ID;
         $arResult["DELIVERY"][$ID] = array(
             "ID" => $ID,
             /*"NAME" => $delob["NAME"],
             "DESCRIPTION" => $delob["DESCRIPTION"],*/
-            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100,"alt=\"".$delob["NAME"]."\"","")
+            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100, "alt=\"" . $delob["NAME"] . "\"", "")
         );
     }
+    $delres = CSaleDelivery2PaySystem::GetList(
+        array(
+            "DELIVERY_ID" => $delID
+        )
+    );
+    while ($delob = $delres->Fetch()) {
+        $ID = $delob["DELIVERY_ID"];
+        if (in_array($ID, $delID)) {
+            $arResult["DELIVERY"][$ID]["PAYMENT_ID"][$delob["PAYSYSTEM_ID"]] = $delob["PAYSYSTEM_ID"];
+        }
+    };
     $payres = CSalePaySystem::GetList(
         array(
             "SORT" => "ASC",
@@ -41,10 +54,10 @@ if (CModule::IncludeModule("sale")) {
         $ID = $payob["ID"];
         $arResult["PAYMENT"][$ID] = array(
             "ID" => $payob["ID"],
-            /*"NAME" => $payob["NAME"],
-            "DESCRIPTION" => $payob["DESCRIPTION"],*/
-            "LOGOTIP"=> CFile::ShowImage($payob["PSA_LOGOTIP"], 100, 100,"alt=\"".$payob["NAME"]."\"","")
+            "NAME" => $payob["NAME"],
+            "DESCRIPTION" => $payob["DESCRIPTION"],
+            "LOGOTIP" => CFile::ShowImage($payob["PSA_LOGOTIP"], 100, 100, "alt=\"" . $payob["NAME"] . "\"", "")
         );
-    }
+    };
 }
 $this->IncludeComponentTemplate();

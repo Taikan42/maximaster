@@ -62,6 +62,7 @@ $APPLICATION->SetTitle("Оформить заказ");
                         <div class="radio_wrap">
                             <input type="radio" name="Delivery"
                                    value="<? echo $arItem["ID"] ?>"/> <? echo $arItem["LOGOTIP"] ?>
+                            <input type="hidden" name="deliveryID-<? echo $arItem["ID"] ?>" class="deliveryID-<? echo $arItem["ID"] ?>" value=<? echo implode(",",$arItem["PAYMENT_ID"]) ?>>
                         </div>
                     <? endforeach; ?>
                 </td>
