@@ -3,17 +3,37 @@
  */
 $(document).ready(function () {
     PopUpHide();
+    var navigate = $('#head-navigate');
+    var borderY = navigate.offset().top;
+    $(window).scroll(function(){
+        var currentY = $(document).scrollTop();
+        if(currentY > borderY)
+        {
+            if (navigate.hasClass("navigate-static")){
+                navigate.removeClass("navigate-static");
+                navigate.addClass("navigate-fixed");
+            }
+        }
+        else
+        {
+            if (navigate.hasClass("navigate-fixed")){
+                navigate.removeClass("navigate-fixed");
+                navigate.addClass("navigate-static");
+            }
+        }
+    });
 });
-$('body').on('click', 'button', function () {
+var $body = $('body');
+$body.on('click', 'button', function () {
     PopUpShow();
     var id = $(this).attr('id');
     var quantity = $('.QUANTITY').attr('value');
     add2basket(id, quantity ? quantity : 1);
 });
-$('body').on('click', '.popup', function () {
+$body.on('click', '.popup', function () {
     PopUpHide();
 });
-$('body').on('click', 'a.continue', function () {
+$body.on('click', 'a.continue', function () {
     PopUpHide();
 });
 function PopUpShow() {
@@ -28,20 +48,5 @@ function add2basket(ID, QUANTITY) {
         url: "/local/templates/maximaster/cart/addbasket_ajax.php",
         data: {id: ID, quantity: QUANTITY}
     });
-}
-window.onscroll = function() {
-    var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-    var elem = document.getElementById("head-navigate");
-    if (scrolled > 70)
-    {
-        if (elem.classList.contains("navigate-static")){
-            elem.classList.remove("navigate-static");
-            elem.classList.add("navigate-fixed");
-        }
-    } else {
-        if (elem.classList.contains("navigate-fixed")){
-            elem.classList.remove("navigate-fixed");
-            elem.classList.add("navigate-static");
-        }
-    }
+
 }
