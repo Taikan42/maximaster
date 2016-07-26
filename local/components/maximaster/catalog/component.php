@@ -72,7 +72,7 @@ if (CModule::IncludeModule("iblock")) {
         false,
         $arSelect);
     $elements_ID = array();
-    while ($ob = $res->GetNext()) {
+    while ($ob = $res->fetch()) {
         $elements_ID[] = $ob["ID"];
         $arResult["ELEMENT"][$ob["ID"]] = array(
             "ID" => $ob["ID"],
@@ -82,16 +82,18 @@ if (CModule::IncludeModule("iblock")) {
             "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"],
         );
     }
-    $res = \CPrice::GetList(
-        [],
-        ["PRODUCT_ID" => $elements_ID, "CATALOG_GROUP_ID" => 1],
-        false,
-        false,
-        ["PRODUCT_ID", "PRICE", "CURRENCY"]
-    );
-    while ($ob = $res->GetNext()) {
-        $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
-        $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
+    if ($elements_ID){
+        $res = \CPrice::GetList(
+            [],
+            ["PRODUCT_ID" => $elements_ID, "CATALOG_GROUP_ID" => 1],
+            false,
+            false,
+            ["PRODUCT_ID", "PRICE", "CURRENCY"]
+        );
+        while ($ob = $res->GetNext()) {
+            $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
+            $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
+        }
     }
 }
 $this->IncludeComponentTemplate();
