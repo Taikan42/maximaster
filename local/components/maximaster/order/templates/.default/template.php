@@ -58,10 +58,9 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="delivery">Получение: </label>
                 </td>
                 <td>
-                    <?$check = false;
-                    foreach ($arResult["DELIVERY"] as $arItem): ?>
+                    <?foreach ($arResult["DELIVERY"] as $arItem): ?>
                         <div class="radio_wrap">
-                            <input type="radio" name="Delivery" <?if(!$check) {echo "checked"; $check = true;}?>
+                            <input type="radio" name="Delivery"
                                    value="<? echo $arItem["ID"] ?>"/> <? echo $arItem["LOGOTIP"] ?>
                         </div>
                     <? endforeach; ?>
@@ -72,17 +71,16 @@ $APPLICATION->SetTitle("Оформить заказ");
                     <label for="payment_type">Способ оплаты: </label>
                 </td>
                 <td>
-                    <?$check = false;
-                    foreach ($arResult["PAYMENT"] as $arItem): ?>
+                    <? foreach ($arResult["PAYMENT"] as $arItem): ?>
                         <div class="radio_wrap">
-                            <input type="radio" name="Payment" <?if(!$check) {echo "checked"; $check = true;}?>
+                            <input type="radio" name="Payment"
                                    value="<? echo $arItem["ID"] ?>"/> <? echo $arItem["LOGOTIP"] ?>
                         </div>
                     <? endforeach; ?>
                 </td>
             </tr>
         </table>
-        <input type="submit" value="Принять" disabled class="submit"/>
+        <input type="submit" value="Принять" class="submit"/>
     </form>
 </div>
 

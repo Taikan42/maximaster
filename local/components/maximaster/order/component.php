@@ -22,7 +22,7 @@ if (CModule::IncludeModule("sale")) {
             "ID" => $ID,
             /*"NAME" => $delob["NAME"],
             "DESCRIPTION" => $delob["DESCRIPTION"],*/
-            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100,"alt=\"".$delob["NAME"]."\"","",true,$delob["DESCRIPTION"])
+            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100,"alt=\"".$delob["NAME"]."\"","")
         );
     }
     $payres = CSalePaySystem::GetList(
@@ -43,7 +43,7 @@ if (CModule::IncludeModule("sale")) {
             "ID" => $payob["ID"],
             /*"NAME" => $payob["NAME"],
             "DESCRIPTION" => $payob["DESCRIPTION"],*/
-            "LOGOTIP"=> CFile::ShowImage($payob["PSA_LOGOTIP"], 100, 100,"alt=\"".$payob["NAME"]."\"","",true,$payob["DESCRIPTION"])
+            "LOGOTIP"=> CFile::ShowImage($payob["PSA_LOGOTIP"], 100, 100,"alt=\"".$payob["NAME"]."\"","")
         );
     }
 }
