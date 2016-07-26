@@ -38,7 +38,6 @@ if (CModule::IncludeModule("sale")) {
         false,
         array("ID", "NAME", "DESCRIPTION", "PSA_LOGOTIP")
     );
-    $payID = array();
     while ($payob = $payres->Fetch()) {
         $ID = $payob["ID"];
         $arResult["PAYMENT"][$ID] = array(
