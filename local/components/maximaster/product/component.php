@@ -21,10 +21,9 @@ if(CModule::IncludeModule("iblock")) {
         false,
         false,
         $arSelect);
-    $ob = $res->GetNextElement();
-    $arFields = $ob->GetFields();
+    $ob = $res->Fetch();
     $CPres = \CPrice::GetList([],[
-            "PRODUCT_ID" => $arFields["ID"],
+            "PRODUCT_ID" => $ob["ID"],
             "CATALOG_GROUP_ID" => 1]
     );
     $arr = $CPres->Fetch();
@@ -32,16 +31,16 @@ if(CModule::IncludeModule("iblock")) {
     $prise = $arrCprise["PRICE"];
     $currency = $arrCprise["CURRENCY"];
     $arResult = array(
-        "ID" => $arFields["ID"],
-        "NAME" => $arFields["NAME"],
-        "TEXT" => $arFields["DETAIL_TEXT"],
-        "PICTURE" => $arFields["DETAIL_PICTURE"],
+        "ID" => $ob["ID"],
+        "NAME" => $ob["NAME"],
+        "TEXT" => $ob["DETAIL_TEXT"],
+        "PICTURE" => $ob["DETAIL_PICTURE"],
         "PRICE" => $prise,
         "CURRENCY" => $currency,
-        "NUMBER" => \CCatalogProduct::GetByID($arFields["ID"])["QUANTITY"],
-        "COUNTRY" => $arFields["PROPERTY_COUNTRY_VALUE"]
+        "NUMBER" => \CCatalogProduct::GetByID($ob["ID"])["QUANTITY"],
+        "COUNTRY" => $ob["PROPERTY_COUNTRY_VALUE"]
     );
-    $BrandID = $arFields["PROPERTY_BRAND_VALUE"];
+    $BrandID = $ob["PROPERTY_BRAND_VALUE"];
     if (!CModule::IncludeModule('highloadblock'));
     $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
     $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);

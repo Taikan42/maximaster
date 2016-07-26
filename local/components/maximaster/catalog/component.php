@@ -72,7 +72,7 @@ if (CModule::IncludeModule("iblock")) {
         false,
         $arSelect);
     $elements_ID = array();
-    while ($ob = $res->fetch()) {
+    while ($ob = $res->GetNext()) {//GetNext для коректного вывода DETAIL_PAGE_URL
         $elements_ID[] = $ob["ID"];
         $arResult["ELEMENT"][$ob["ID"]] = array(
             "ID" => $ob["ID"],
@@ -90,7 +90,7 @@ if (CModule::IncludeModule("iblock")) {
             false,
             ["PRODUCT_ID", "PRICE", "CURRENCY"]
         );
-        while ($ob = $res->GetNext()) {
+        while ($ob = $res->fetch()) {
             $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
             $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
         }
