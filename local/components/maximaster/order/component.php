@@ -35,12 +35,12 @@ if (CModule::IncludeModule("sale")) {
     while ($delob = $delres->Fetch()) {
         $ID = $delob["DELIVERY_ID"];
         if (in_array($ID, $delID)) {
-            $arResult["DELIVERY"][$ID]["PAYMENT_ID"][$delob["PAYSYSTEM_ID"]] = $delob["PAYSYSTEM_ID"];
+            $arResult["DELIVERY"][$ID]["PAYMENT_ID"][] = $delob["PAYSYSTEM_ID"];
         }
     };
     $payres = CSalePaySystem::GetList(
         array(
-            "SORT" => "ASC",
+            "ID" => "ASC",
         ),
         array(
             "LID" => SITE_ID,

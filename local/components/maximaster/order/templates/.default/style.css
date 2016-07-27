@@ -26,6 +26,9 @@
     text-align: center;
     color: #959595;
 }
+.form-order .hide{
+    display: none;
+}
 .form-order .submit{
     width: 130px;
     height: 25px;

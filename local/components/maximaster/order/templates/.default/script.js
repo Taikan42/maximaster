@@ -1,4 +1,3 @@
-/*Проверка телефона*/
 jQuery(function ($) {
     $('#user_phone').mask("+7(999) 999-99-99");
 });
@@ -58,10 +57,34 @@ $(document).ready(function () {
                 email: "Your email address must be in the format of name@domain.com"
             },
             Delivery: {
-                required: "Это поле обязательно для заполнения"
+                required: ""
             },
             Payment: {
-                required: "Это поле обязательно для заполнения"
+                required: ""
+            }
+        }
+    });
+    var deliv = $("[name='Delivery']");
+    var check_pay = false;
+    var selectID;
+    deliv.click(function () {
+        if (!check_pay) {
+            $(".payment").removeClass("hide");
+            check_pay = true;
+        }
+        if ($(this).val() != selectID) {
+            selectID = $(this).val();
+            /*ищем скрытый инпут с ограничениями для типа платежей для данного способа получения
+             * записываем айди разрешенных типов платежей в массив*/
+            var Pay_ID = $("[name=\'permiss_types_payment-delID=" + $(this).val() + "\']").val().split(',');
+            $('.payment_wrap').each(function () {
+                /*скрываем все платежы и снимаем выделение*/
+                $(this).addClass("hide");
+                $(this).children().removeAttr("checked");
+            });
+            for (index = Pay_ID.length - 1; index >= 0; --index) {
+                /*показываем только разрешенные платежы*/
+                $(".paymentID-" + String(Pay_ID[index])).removeClass("hide");
             }
         }
     });
