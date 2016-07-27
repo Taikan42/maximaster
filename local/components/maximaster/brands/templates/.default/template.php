@@ -5,14 +5,14 @@
             <? if ($arResult["MULTIPLE"]): ?>
                 <? foreach ($arResult["BRAND"] as $arItem): ?>
                     <li>
-                        <a href="<? echo "/catalog/list.php?BRAND=" . $arItem["XML_ID"]; ?>">
+                        <a href="<? echo "/catalog/list/" . $arItem["XML_ID"]; ?>">
                             <? echo $arItem["NAME"]; ?>
                         </a>
                     </li>
                 <? endforeach ?>
             <? else: ?>
                 <li>
-                    <a href="<? echo "/catalog/list.php?BRAND=" . $arResult["XML_ID"]; ?>">
+                    <a href="<? echo "/catalog/list/" . $arResult["XML_ID"]; ?>">
                         <? echo $arResult["BRAND"]; ?>
                     </a>
                 </li>
