@@ -10,6 +10,22 @@ $arComponentParameters = array(
             "DEFAULT" => "4",
             "REFRESH" => "Y",
         ),
+        "BASKET_PAGE" => array(
+            "PARENT" => "BASE",
+            "NAME" => "Страница корзины",
+            "TYPE" => "STRING",
+            "MULTIPLE" => "N",
+            "DEFAULT" => "",
+            "REFRESH" => "Y",
+        ),
+        "SECTIONS" => array(
+            "PARENT" => "BASE",
+            "NAME" => "Вывести разделы инфоблока",
+            "TYPE" => "STRING",
+            "MULTIPLE" => "N",
+            "DEFAULT" => "N",
+            "REFRESH" => "Y",
+        ),
     )
 );
 ?>

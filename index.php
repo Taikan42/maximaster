@@ -26,7 +26,10 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ); ?>
 <?endif?>
 <? $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
-	array("IBLOCK_ID" => "4"),
+	array(
+		"IBLOCK_ID" => "4",
+		"BASKET_PAGE" => "/local/templates/maximaster/cart/index.php"
+	),
 	false
 ); ?>
 <?/*$APPLICATION->IncludeComponent(

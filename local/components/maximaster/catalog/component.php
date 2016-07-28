@@ -2,97 +2,126 @@
 ini_set('display_errors', 1);
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 if (CModule::IncludeModule("iblock")) {
-    $idSECTION = $_GET["SECTION_ID"];
-    $arResult["SECTION"] = array();
-    $arResult["ELEMENT"] = array();
-    if (!CModule::IncludeModule('highloadblock')) ;
-    $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($arParams["IBLOCK_ID"])->fetch();
-    $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
-    $hlDataClass = $hldata['NAME'] . 'Table';
-    if ($idSECTION) {
-        $arResult["CHECK_SECTION"] = true;//Если выводятся элементы раздела- выводить описание раздела
+    $arResult["BASKET_PAGE"] = $arParams["BASKET_PAGE"];
+    $SECTIONS = $arParams["SECTIONS"];
+    $SECTION_ID = intval($_GET["SECTION_ID"]);
+    $BRAND_XML = $_GET["BRAND"];
+    $arFilter = null;
+    if ($SECTIONS ==="Y") {
+        /*Страница разделов*/
+        $arResult["TITLE"] = "Разделы:";
+        $arResult["SECTION"] = array();
         $res = CIBlockSection::getList(
             ["SORT" => "ASC"],
-            ["ID" => $idSECTION],
+            ["IBLOCK_ID" => $arParams["IBLOCK_ID"],
+             "ACTIVE" => "Y",
+            "DEPTH_LEVEL" => 1],
+            false,
+            ["NAME", "DESCRIPTION", "PICTURE"],
+            false
+        );
+        while ($ob = $res->fetch()) {
+            $arResult["SECTION"][] = array(
+                "NAME" => $ob['NAME'],
+                "DESCRIPTION" => $ob['DESCRIPTION'],
+                "PICTURE" => $ob['PICTURE']
+            );
+        }
+    } elseif ($SECTION_ID) {
+        /*Страница раздела*/
+        $arResult["SECTION"] = array();
+        $res = CIBlockSection::getList(
+            ["SORT" => "ASC"],
+            ["ID" => $SECTION_ID],
             false,
             ["NAME", "DESCRIPTION", "PICTURE"],
             false
         );
         $res = $res->fetch();
-        $arResult["SECTION"]["NAME"] = $res['NAME'];
-        $arResult["SECTION"]["DESCRIPTION"] = $res['DESCRIPTION'];
-        $arResult["SECTION"]["PICTURE"] = $res['PICTURE'];
+        $arResult["TITLE"] = $res['NAME'];
+        $arResult["SECTION"][]= array(
+            "NAME" => $res['NAME'],
+            "DESCRIPTION" => $res['DESCRIPTION'],
+            "PICTURE" => $res['PICTURE']
+        );
         $arFilter = Array(
-            "SECTION_ID" => $idSECTION,
+            "SECTION_ID" => $SECTION_ID,
             "INCLUDE_SUBSECTIONS" => "Y"
         );
-    } else {
-        $XMLBRAND = $_GET["BRAND"];
-        $arResult["CHECK_SECTION"] = false; //не выводить описание раздела
-        if ($XMLBRAND) {
+    } elseif ($BRAND_XML) {
+        /*Страница фильтра по бренду*/
+        if (CModule::IncludeModule('highloadblock')){
+            $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($arParams["IBLOCK_ID"])->fetch();
+            $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+            $hlDataClass = $hldata['NAME'] . 'Table';
             $result = $hlDataClass::getList(array(
                 'select' => array('UF_NAME'),
-                'filter' => array('UF_XML_ID' => $XMLBRAND),
+                'filter' => array('UF_XML_ID' => $BRAND_XML),
             ));
             $res = $result->fetch();
-            $arResult["SECTION"]["NAME"] = $res["UF_NAME"];
+            $arResult["TITLE"] = $res["UF_NAME"];
             $arFilter = Array(
-                "PROPERTY_BRAND" => $XMLBRAND
-            );
-        } else {
-            $res = CIBlock::getList(
-                [],
-                ["ID" => $arParams["IBLOCK_ID"]],
-                false
-            );
-            $res = $res->fetch();
-            $arResult["SECTION"]["NAME"] = $res["NAME"];
-            $arFilter = Array(
-                "IBLOCK_ID" => $arParams["IBLOCK_ID"],
-                "INCLUDE_SUBSECTIONS" => "Y"
+                "PROPERTY_BRAND" => $BRAND_XML
             );
         }
-    }
-    if ($GLOBALS["arrFilter"]) {
-        $arFilter = array_merge($arFilter, $GLOBALS["arrFilter"]);
-    }
-    $arSelect = Array(
-        "ID",
-        "IBLOCK_ID",
-        "IBLOCK_SECTION_ID",
-        "DETAIL_PAGE_URL",
-        "NAME",
-        "PREVIEW_TEXT",
-        "PREVIEW_PICTURE"
-    );
-    $res = CIBlockElement::GetList(
-        Array(),
-        $arFilter,
-        false,
-        false,
-        $arSelect);
-    $elements_ID = array();
-    while ($ob = $res->GetNext()) {//GetNext для коректного вывода DETAIL_PAGE_URL
-        $elements_ID[] = $ob["ID"];
-        $arResult["ELEMENT"][$ob["ID"]] = array(
-            "ID" => $ob["ID"],
-            "DETAIL_PAGE_URL" => $ob["DETAIL_PAGE_URL"],
-            "NAME" => $ob["NAME"],
-            "PREVIEW_TEXT" => $ob["PREVIEW_TEXT"],
-            "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"],
-        );
-    }
-    if ($elements_ID){
-        $res = \CPrice::GetList(
+    } else {
+        /*Главная страница*/
+        $res = CIBlock::getList(
             [],
-            ["PRODUCT_ID" => $elements_ID, "CATALOG_GROUP_ID" => 1],
-            false,
-            false,
-            ["PRODUCT_ID", "PRICE", "CURRENCY"]
+            ["ID" => $arParams["IBLOCK_ID"]],
+            false
         );
-        while ($ob = $res->fetch()) {
-            $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
-            $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
+        $res = $res->fetch();
+        $arResult["TITLE"] = $res["NAME"];
+        $arFilter = Array(
+            "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+            "INCLUDE_SUBSECTIONS" => "Y"
+        );
+    }
+
+    if($arFilter) {
+        $arResult["ELEMENT"] = array();
+        if ($GLOBALS["arrFilter"]) {
+            $arFilter = array_merge($arFilter, $GLOBALS["arrFilter"]);
+        }
+        $arSelect = Array(
+            "ID",
+            "IBLOCK_ID",
+            "IBLOCK_SECTION_ID",
+            "DETAIL_PAGE_URL",
+            "NAME",
+            "PREVIEW_TEXT",
+            "PREVIEW_PICTURE"
+        );
+        $res = CIBlockElement::GetList(
+            Array(),
+            $arFilter,
+            false,
+            false,
+            $arSelect);
+        $elements_ID = array();
+        while ($ob = $res->GetNext()) {//GetNext для коректного вывода DETAIL_PAGE_URL
+            $elements_ID[] = $ob["ID"];
+            $arResult["ELEMENT"][$ob["ID"]] = array(
+                "ID" => $ob["ID"],
+                "DETAIL_PAGE_URL" => $ob["DETAIL_PAGE_URL"],
+                "NAME" => $ob["NAME"],
+                "PREVIEW_TEXT" => $ob["PREVIEW_TEXT"],
+                "PREVIEW_PICTURE" => $ob["PREVIEW_PICTURE"],
+            );
+        }
+        if ($elements_ID) {
+            $res = \CPrice::GetList(
+                [],
+                ["PRODUCT_ID" => $elements_ID, "CATALOG_GROUP_ID" => 1],
+                false,
+                false,
+                ["PRODUCT_ID", "PRICE", "CURRENCY"]
+            );
+            while ($ob = $res->fetch()) {
+                $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["PRICE"] = $ob["PRICE"];
+                $arResult["ELEMENT"][$ob["PRODUCT_ID"]]["CURRENCY"] = $ob["CURRENCY"];
+            }
         }
     }
 }

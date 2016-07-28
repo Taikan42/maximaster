@@ -83,7 +83,7 @@ $(document).ready(function () {
                 $(this).children().removeAttr("checked");
             });
             for (index = Pay_ID.length - 1; index >= 0; --index) {
-                /*показываем только разрешенные платежы*/
+                /*показываем только разрешенные платежи*/
                 $(".paymentID-" + String(Pay_ID[index])).removeClass("hide");
             }
         }
