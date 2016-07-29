@@ -7,23 +7,26 @@ if (CModule::IncludeModule("iblock")) {
     $SECTION_ID = intval($_GET["SECTION_ID"]);
     $BRAND_XML = $_GET["BRAND"];
     $arFilter = null;
-    if ($SECTIONS ==="Y") {
+    if ($SECTIONS === "Y") {
         /*Страница разделов*/
         $arResult["TITLE"] = "Разделы:";
         $arResult["SECTION"] = array();
         $res = CIBlockSection::getList(
             ["SORT" => "ASC"],
-            ["IBLOCK_ID" => $arParams["IBLOCK_ID"],
-             "ACTIVE" => "Y",
-            "DEPTH_LEVEL" => 1],
+            array(
+                "IBLOCK_ID" => $arParams["IBLOCK_ID"],
+                "ACTIVE" => "Y",
+                "DEPTH_LEVEL" => 1
+            ),
             false,
-            ["NAME", "DESCRIPTION", "PICTURE"],
+            ["NAME", "DESCRIPTION", "SECTION_PAGE_URL", "PICTURE"],
             false
         );
-        while ($ob = $res->fetch()) {
+        while ($ob = $res->GetNext()) {
             $arResult["SECTION"][] = array(
                 "NAME" => $ob['NAME'],
                 "DESCRIPTION" => $ob['DESCRIPTION'],
+                "SECTION_PAGE_URL" => $ob['SECTION_PAGE_URL'],
                 "PICTURE" => $ob['PICTURE']
             );
         }
@@ -34,14 +37,15 @@ if (CModule::IncludeModule("iblock")) {
             ["SORT" => "ASC"],
             ["ID" => $SECTION_ID],
             false,
-            ["NAME", "DESCRIPTION", "PICTURE"],
+            ["NAME", "DESCRIPTION", "SECTION_PAGE_URL", "PICTURE"],
             false
         );
-        $res = $res->fetch();
+        $res = $res->GetNext();
         $arResult["TITLE"] = $res['NAME'];
-        $arResult["SECTION"][]= array(
+        $arResult["SECTION"][] = array(
             "NAME" => $res['NAME'],
             "DESCRIPTION" => $res['DESCRIPTION'],
+            "SECTION_PAGE_URL" => $ob['SECTION_PAGE_URL'],
             "PICTURE" => $res['PICTURE']
         );
         $arFilter = Array(
@@ -50,7 +54,7 @@ if (CModule::IncludeModule("iblock")) {
         );
     } elseif ($BRAND_XML) {
         /*Страница фильтра по бренду*/
-        if (CModule::IncludeModule('highloadblock')){
+        if (CModule::IncludeModule('highloadblock')) {
             $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($arParams["IBLOCK_ID"])->fetch();
             $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
             $hlDataClass = $hldata['NAME'] . 'Table';
@@ -79,7 +83,7 @@ if (CModule::IncludeModule("iblock")) {
         );
     }
 
-    if($arFilter) {
+    if ($arFilter) {
         $arResult["ELEMENT"] = array();
         if ($GLOBALS["arrFilter"]) {
             $arFilter = array_merge($arFilter, $GLOBALS["arrFilter"]);

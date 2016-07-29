@@ -4,15 +4,17 @@
     <section class="catalog">
         <? if (!empty($arResult["SECTION"])): ?>
             <? foreach ($arResult["SECTION"] as $arItem): ?>
-                <div class="flex-cont section">
-                    <div class="flex-block left-block">
-                        <? echo CFile::ShowImage($arItem["PICTURE"], 200, 200, "border=0", "", false); ?>
+                <a href="<? echo($arItem["SECTION_PAGE_URL"]) ?>">
+                    <div class="flex-cont section">
+                        <div class="flex-block left-block">
+                            <? echo CFile::ShowImage($arItem["PICTURE"], 200, 200, "border=0", "", false); ?>
+                        </div>
+                        <div class="flex-block right-block">
+                            <h3><? echo $arItem["NAME"] ?></h3>
+                            <p><? echo $arItem["DESCRIPTION"] ?></p>
+                        </div>
                     </div>
-                    <div class="flex-block right-block">
-                        <h3><? echo $arItem["NAME"] ?></h3>
-                        <p><? echo $arItem["DESCRIPTION"] ?></p>
-                    </div>
-                </div>
+                </a>
             <? endforeach ?>
         <? endif ?>
         <? if (!empty($arResult["ELEMENT"])): ?>
