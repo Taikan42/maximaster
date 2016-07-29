@@ -37,7 +37,7 @@
         <? if (!empty($arResult["BASKET_PAGE"])): ?>
             <div class="popup" id="popup1">
                 <div class="popup-content">
-                    <a href="#" class="continue""> Продолжить </a>
+                    <a class="continue""> Продолжить </a>
                     <a href="<? echo $arResult["BASKET_PAGE"] ?>">К корзине</a>
                 </div>
             </div>

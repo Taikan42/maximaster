@@ -46,7 +46,11 @@ function add2basket(ID, QUANTITY) {
     $.ajax({
         type: 'POST',
         url: "/local/templates/maximaster/cart/addbasket_ajax.php",
-        data: {id: ID, quantity: QUANTITY}
+        data: {id: ID, quantity: QUANTITY},
+        success: function(out){
+            console.log(out);
+            $("#basket-container").html(out);
+        }
     });
 }
 jQuery(function(){

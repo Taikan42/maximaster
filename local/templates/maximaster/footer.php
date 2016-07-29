@@ -5,6 +5,35 @@
             array(),
             false
         ); ?>
+        <div id="basket-container">
+            <?$APPLICATION->IncludeComponent(
+                "bitrix:sale.basket.basket.line",
+                "",
+                Array(
+                    "HIDE_ON_BASKET_PAGES" => "Y",
+                    "PATH_TO_BASKET" => "/local/templates/maximaster/cart/index.php",
+                    "PATH_TO_ORDER" => "/local/templates/maximaster/cart/order.php",
+                    "PATH_TO_PERSONAL" => "",
+                    "PATH_TO_PROFILE" => "",
+                    "PATH_TO_REGISTER" => "",
+                    "POSITION_FIXED" => "N",
+                    "POSITION_HORIZONTAL" => "right",
+                    "POSITION_VERTICAL" => "top",
+                    "SHOW_AUTHOR" => "N",
+                    "SHOW_DELAY" => "N",
+                    "SHOW_EMPTY_VALUES" => "Y",
+                    "SHOW_IMAGE" => "Y",
+                    "SHOW_NOTAVAIL" => "N",
+                    "SHOW_NUM_PRODUCTS" => "Y",
+                    "SHOW_PERSONAL_LINK" => "N",
+                    "SHOW_PRICE" => "Y",
+                    "SHOW_PRODUCTS" => "Y",
+                    "SHOW_SUBSCRIBE" => "N",
+                    "SHOW_SUMMARY" => "Y",
+                    "SHOW_TOTAL_PRICE" => "Y"
+                )
+            );?>
+        </div>
     </div>
 </section>
 <footer>

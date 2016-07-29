@@ -26,7 +26,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
         "GIFTS_TEXT_LABEL_GIFT" => "Подарок",
         "HIDE_COUPON" => "N",
         "OFFERS_PROPS" => array(),
-        "PATH_TO_ORDER" => "/personal/order.php",
+        "PATH_TO_ORDER" => "/local/templates/maximaster/cart/order.php",
         "PRICE_VAT_SHOW_VALUE" => "N",
         "QUANTITY_FLOAT" => "N",
         "SET_TITLE" => "Y",
