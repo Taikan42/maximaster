@@ -6,7 +6,7 @@ $APPLICATION->SetTitle($arResult["NAME"]);
         <h3><?echo $arResult["NAME"]?></h3>
         <div class="flex-cont">
             <div class="flex-block left-block">
-                <? echo CFile::ShowImage($arResult["PICTURE"], 200, 200, "border=0", "", false); ?>
+                <? echo CFile::ShowImage($arResult["PICTURE"], 300, 300, "border=0 class=zoom-img", "", false); ?>
             </div>
             <div class="flex-block right-block">
                 <p class="price"><?echo $arResult["PRICE"]?> <?echo $arResult["CURRENCY"]?>.</p>

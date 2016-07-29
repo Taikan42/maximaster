@@ -48,5 +48,12 @@ function add2basket(ID, QUANTITY) {
         url: "/local/templates/maximaster/cart/addbasket_ajax.php",
         data: {id: ID, quantity: QUANTITY}
     });
-
 }
+jQuery(function(){
+    $(".zoom-img").imagezoomsl({
+        zoomrange: [1, 12],
+        zoomstart: 4,
+        innerzoom: true,
+        magnifierborder: "none"
+    });
+});   
