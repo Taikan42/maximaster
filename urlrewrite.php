@@ -25,17 +25,17 @@ $arUrlRewrite = array(
         "PATH" => "/news/index.php",
     ),
     array(
-        "CONDITION" => "#^/catalog/.*/list/([0-9]+).*#",
+        "CONDITION" => "#^/catalog.*/list/([0-9]+).*#",
         "RULE" => "SECTION_ID=$1",
         "PATH" => "/catalog/list.php",
     ),
     array(
-        "CONDITION" => "#^/catalog/.*/list/([A_Z]?[a-z]+).*#",
+        "CONDITION" => "#^/catalog/list/([A_Z]?[a-z]+).*#",
         "RULE" => "BRAND=$1",
         "PATH" => "/catalog/list.php",
     ),
     array(
-        "CONDITION" => "#^/catalog/.*/product/([0-9]+).*#",
+        "CONDITION" => "#^/catalog.*/product/([0-9]+).*#",
         "RULE" => "ID=$1",
         "PATH" => "/catalog/product.php",
     ),

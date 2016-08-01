@@ -58,7 +58,7 @@ if (CModule::IncludeModule("sale") && CModule::IncludeModule("catalog")) {
                 "SHOW_NUM_PRODUCTS" => "Y",
                 "SHOW_PERSONAL_LINK" => "N",
                 "SHOW_PRICE" => "Y",
-                "SHOW_PRODUCTS" => "Y",
+                "SHOW_PRODUCTS" => "N",
                 "SHOW_SUBSCRIBE" => "N",
                 "SHOW_SUMMARY" => "Y",
                 "SHOW_TOTAL_PRICE" => "Y"

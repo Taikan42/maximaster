@@ -1,10 +1,5 @@
     </div>
     <div class="flex-block right-block">
-        <h2>Правый сайд бар-список</h2>
-        <? $APPLICATION->IncludeComponent("maximaster:brands", ".default",
-            array(),
-            false
-        ); ?>
         <div id="basket-container">
             <?$APPLICATION->IncludeComponent(
                 "bitrix:sale.basket.basket.line",
@@ -27,13 +22,18 @@
                     "SHOW_NUM_PRODUCTS" => "Y",
                     "SHOW_PERSONAL_LINK" => "N",
                     "SHOW_PRICE" => "Y",
-                    "SHOW_PRODUCTS" => "Y",
+                    "SHOW_PRODUCTS" => "N",
                     "SHOW_SUBSCRIBE" => "N",
                     "SHOW_SUMMARY" => "Y",
                     "SHOW_TOTAL_PRICE" => "Y"
                 )
             );?>
         </div>
+        <h2>Правый сайд бар-список</h2>
+        <? $APPLICATION->IncludeComponent("maximaster:brands", ".default",
+            array(),
+            false
+        ); ?>
     </div>
 </section>
 <footer>
