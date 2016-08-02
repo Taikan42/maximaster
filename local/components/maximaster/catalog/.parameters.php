@@ -21,10 +21,8 @@ $arComponentParameters = array(
         "SECTIONS" => array(
             "PARENT" => "BASE",
             "NAME" => "Вывести разделы инфоблока",
-            "TYPE" => "STRING",
-            "MULTIPLE" => "N",
+            "TYPE" => "CHECKBOX",
             "DEFAULT" => "N",
-            "REFRESH" => "Y",
         ),
     )
 );
