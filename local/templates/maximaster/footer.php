@@ -2,6 +2,16 @@
     <div class="flex-block right-block">
         <div id="basket-container">
             <?$APPLICATION->IncludeComponent(
+                "maximaster:basket.small",
+                ".default",
+                Array(
+                    "PATH_TO_BASKET" => "/local/templates/maximaster/cart/index.php",
+                    "PATH_TO_ORDER" => "/local/templates/maximaster/cart/order.php",
+                    "SHOW_NUM_PRODUCTS" => "Y",
+                    "SHOW_TOTAL_PRICE" => "Y"
+                ));
+            ?>
+            <?/*$APPLICATION->IncludeComponent(
                 "bitrix:sale.basket.basket.line",
                 "",
                 Array(
@@ -27,7 +37,7 @@
                     "SHOW_SUMMARY" => "Y",
                     "SHOW_TOTAL_PRICE" => "Y"
                 )
-            );?>
+            );*/?>
         </div>
         <h2>Правый сайд бар-список</h2>
         <? $APPLICATION->IncludeComponent("maximaster:brands", ".default",

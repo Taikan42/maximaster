@@ -1,0 +1,33 @@
+.mm-basket-block{
+    display: block;
+    position: relative;
+    width: 220px;
+    height: 60px;
+    background: #c3f0ff;
+    border-radius: 10px;
+    padding: 5px;
+}
+.mm-basket-block:hover{
+    background: #e7ffd3;
+}
+.mm-basket-block span{
+    display: block;
+    margin-left: 50px;
+    text-align: left;
+    font-size: 0.9em;
+    color: #626262;
+}
+.mm-basket-block .head{
+    font-size: 1.2em;
+}
+.mm-basket-block:before {
+    content: "";
+    display: block;
+    background: url(images/icon.png);
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
