@@ -39,7 +39,9 @@ div.menu-sitemap-tree div.item-text
 	position:relative;
 	top:-19px;left:19px;
 }
-
+div.menu-sitemap-tree a{
+	color: #638e99;
+}
 /*Icons*/
 div.folder, div.page
 {
