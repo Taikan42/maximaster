@@ -20,8 +20,8 @@ class MMCatalog extends CBitrixComponent
     public function executeComponent()
     {
         if (CModule::IncludeModule("iblock")) {
-            $this->arResult['BASKET_PAGE'] = $this->arParams['BASKET_PAGE'];
             $this->arResult = $this->getElements($this->arParams['IBLOCK_ID'], $this->arParams['SECTIONS']);
+            $this->arResult['BASKET_PAGE'] = $this->arParams['BASKET_PAGE'];
             $this->includeComponentTemplate();
         }
         return $this->arResult;
