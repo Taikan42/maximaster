@@ -48,6 +48,31 @@ $APPLICATION->SetTitle("Оформить заказ");
                 </tr>
                 <tr>
                     <td>
+                        <span>Местонахождение: </span>
+                    </td>
+                    <td>
+                        <? $APPLICATION->IncludeComponent(
+                            "bitrix:sale.location.selector.search",
+                            "",
+                            Array(
+                                "CACHE_TIME" => "36000000",
+                                "CACHE_TYPE" => "A",
+                                "CODE" => "",
+                                "FILTER_BY_SITE" => "N",
+                                "ID" => "",
+                                "INITIALIZE_BY_GLOBAL_EVENT" => "",
+                                "INPUT_NAME" => "location",
+                                "JS_CALLBACK" => "",
+                                "JS_CONTROL_GLOBAL_ID" => "",
+                                "PROVIDE_LINK_BY" => "id",
+                                "SHOW_DEFAULT_LOCATIONS" => "N",
+                                "SUPPRESS_ERRORS" => "N"
+                            )
+                        ); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <label for="user_comments">Коментарии: </label>
                     </td>
                     <td>
@@ -64,9 +89,13 @@ $APPLICATION->SetTitle("Оформить заказ");
                                 <input type="radio" name="Delivery" id="del-<? echo $arItem["ID"] ?>"
                                        value="<? echo $arItem["ID"] ?>"/>
                                 <label for="del-<? echo $arItem["ID"] ?>"><? echo $arItem["LOGOTIP"] ?></label>
-                                <? if (!empty($arItem["PAYMENT_ID"])): ?>
+                                <input type="hidden"
+                                       name="permiss_types_payment-delID=<? echo $arItem["ID"] ?>"
+                                value=<? echo implode(",", $arItem["PAYMENT_ID"]) ?>>
+                                <? if ($arItem["HANDLER"] == "Y"): ?>
                                     <input type="hidden"
-                                           name="permiss_types_payment-delID=<? echo $arItem["ID"] ?>" " value=<? echo implode(",", $arItem["PAYMENT_ID"]) ?>>
+                                           name="DeliveryHandler-SID=<? echo $arItem["ID"] ?>"
+                                    value= "true">
                                 <? endif ?>
                             </div>
                         <? endforeach; ?>

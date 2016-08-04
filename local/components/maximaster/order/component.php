@@ -27,6 +27,25 @@ if (CModule::IncludeModule("sale")) {
             "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100, "alt=\"" . $delob["NAME"] . "\"", "")
         );
     }
+    $delres = CSaleDeliveryHandler::GetList(
+        array(
+            "SORT" => "ASC",
+            "NAME" => "ASC"
+        ),
+        array(
+            "LID" => SITE_ID,
+            "ACTIVE" => "Y"
+        )
+    );
+    while ($delob = $delres->Fetch()) {
+        $ID = $delob["SID"];
+        $delID[] = $ID;
+        $arResult["DELIVERY"][$ID] = array(
+            "HANDLER" => "Y",
+            "ID" => $ID,
+            "LOGOTIP" => CFile::ShowImage($delob["LOGOTIP"], 100, 100, "alt=\"" . $delob["NAME"] . "\"", "")
+        );
+    }
     $delres = CSaleDelivery2PaySystem::GetList(
         array(
             "DELIVERY_ID" => $delID
@@ -35,7 +54,8 @@ if (CModule::IncludeModule("sale")) {
     while ($delob = $delres->Fetch()) {
         $ID = $delob["DELIVERY_ID"];
         if (in_array($ID, $delID)) {
-            $arResult["DELIVERY"][$ID]["PAYMENT_ID"][] = $delob["PAYSYSTEM_ID"];
+            if (!in_array($delob["PAYSYSTEM_ID"],$arResult["DELIVERY"][$ID]["PAYMENT_ID"]))
+                $arResult["DELIVERY"][$ID]["PAYMENT_ID"][] = $delob["PAYSYSTEM_ID"];
         }
     };
     $payres = CSalePaySystem::GetList(
