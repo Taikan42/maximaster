@@ -38,12 +38,12 @@ class MTulaExpress
             ),
             "CONFIG" => array(
                 "tula1" => array(
-                    "TITLE" => "Доставка по туле в первой половине дня",
+                    "TITLE" => "Доставка по Туле в первой половине дня",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
                     "GROUP" => "price"),
                 "tula2" => array(
-                    "TITLE" => "Доставка по туле во второй половине дня",
+                    "TITLE" => "Доставка по Туле во второй половине дня",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
                     "GROUP" => "price"),
@@ -81,7 +81,7 @@ class MTulaExpress
     {
         $check = true;
         foreach ($arConfig as $arItem){
-            if ($arItem != "") $check = false;
+            if ($arItem["VALUE"] == "") $check = false;
         }
         $res_loc = CSaleLocation::GetList(
             array(),
