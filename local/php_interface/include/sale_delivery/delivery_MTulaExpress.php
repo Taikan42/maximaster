@@ -9,7 +9,8 @@ class MTulaExpress
             "SID" => "tulaexpress",
             "NAME" => "Тула экспресс",
             "DESCRIPTION" => "",
-            "DESCRIPTION_INNER" => "",
+            "DESCRIPTION_INNER" => "Обработчик доставки \"Тула экспресс\" Для функционирования необходимо"
+                . " заполнение всех полей стоимости доставки",
             "BASE_CURRENCY" => COption::GetOptionString("sale", "default_currency", "RUB"),
             "HANDLER" => __FILE__,
             "DBGETSETTINGS" => array("MTulaExpress", "GetSettings"),
@@ -20,7 +21,7 @@ class MTulaExpress
 
             "PROFILES" => array(
                 "base" => array(
-                    "TITLE" => "доставка",
+                    "TITLE" => "Express",
                     "DESCRIPTION" => "",
                     "RESTRICTIONS_WEIGHT" => array(0),
                     "RESTRICTIONS_SUM" => array(0),
@@ -33,34 +34,34 @@ class MTulaExpress
     {
         $arConfig = array(
             "CONFIG_GROUPS" => array(
-                "prise" => "Стоимость доставки",
+                "price" => "Стоимость доставки",
             ),
             "CONFIG" => array(
                 "tula1" => array(
                     "TITLE" => "Доставка по туле в первой половине дня",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
-                    "GROUP" => "prise"),
+                    "GROUP" => "price"),
                 "tula2" => array(
                     "TITLE" => "Доставка по туле во второй половине дня",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
-                    "GROUP" => "prise"),
+                    "GROUP" => "price"),
                 "moscow" => array(
                     "TITLE" => "Наценка при доставке в Москву в %",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
-                    "GROUP" => "prise"),
+                    "GROUP" => "price"),
                 "nodeliver" => array(
-                    "TITLE" => "Не доставлять в города на букву:",
+                    "TITLE" => "Не доставлять в города на букву",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
-                    "GROUP" => "prise"),
+                    "GROUP" => "price"),
                 "others" => array(
                     "TITLE" => "Цена для остальных случаев",
                     "TYPE" => "STRING",
                     "DEFAULT" => "",
-                    "GROUP" => "prise"),
+                    "GROUP" => "price"),
             )
         );
         return $arConfig;
@@ -78,6 +79,10 @@ class MTulaExpress
 
     function Compability($arOrder, $arConfig)
     {
+        $check = true;
+        foreach ($arConfig as $arItem){
+            if ($arItem != "") $check = false;
+        }
         $res_loc = CSaleLocation::GetList(
             array(),
             array("ID" => $arOrder["LOCATION_TO"]),
@@ -88,10 +93,13 @@ class MTulaExpress
         if ($ob = $res_loc->fetch()) {//Проверка наличия местоположения
             $char = mb_substr($ob["CITY_NAME"], 0, 1, "UTF-8");
             if ($char == $arConfig["nodeliver"]["VALUE"]) {
-                return array();
-            } else {
-                return array('base');
+                $check = false;
             }
+        } else {
+            $check = false;
+        }
+        if ($check){
+            return array('base');
         } else{
             return array();
         }
@@ -122,11 +130,11 @@ class MTulaExpress
             }
             return array(
                 "RESULT" => "OK",
-                "VALUE" => "$resultprice"
+                "VALUE" => $resultprice
             );
         } else
             return array(
-                "RESULT" => "ERROR",
+                "RESULT" => "ERROR"
             );
     }
 }

@@ -4,4 +4,11 @@
 }
 .filter table ,.filter td ,.filter tr{
     border: 2px outset #aeaeae;
+    text-align: center;
+}
+.filter table select{
+    width: 100%;
+}
+.filter table input{
+    width: 40%;
 }

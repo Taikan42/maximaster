@@ -46,7 +46,7 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
             }
             $arOrder = array(
                 "WEIGHT" => "0",
-                "PRICE" => "$Total",
+                "PRICE" => $Total,
                 "LOCATION_FROM" => COption::GetOptionInt('sale', 'location'),
                 "LOCATION_TO" => $arPost["location"]
             );
