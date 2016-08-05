@@ -68,12 +68,6 @@ class MTulaExpress
 
     function SetSettings($arSettings)
     {
-        foreach ($arSettings as $key => $value) {
-            if (strlen($value) > 0)
-                $arSettings[$key] = doubleval($value);
-            else
-                unset($arSettings[$key]);
-        }
         return serialize($arSettings);
     }
 
@@ -91,13 +85,16 @@ class MTulaExpress
             false,
             array()
         );
-        if ($ob = $res_loc->Fetch()) //Проверка наличия местоположения
-            if ($ob["CITY_NAME"]{0} == $arConfig["nodeliver"]["VALUE"])
+        if ($ob = $res_loc->fetch()) {//Проверка наличия местоположения
+            $char = mb_substr($ob["CITY_NAME"], 0, 1, "UTF-8");
+            if ($char == $arConfig["nodeliver"]["VALUE"]) {
                 return array();
-            else
+            } else {
                 return array('base');
-        else
+            }
+        } else{
             return array();
+        }
     }
 
     function Calculate($profile, $arConfig, $arOrder, $STEP, $TEMP = false)
@@ -133,4 +130,5 @@ class MTulaExpress
             );
     }
 }
-AddEventHandler("sale", "onSaleDeliveryHandlersBuildList", array('MTulaExpress', 'Init')); 
+
+AddEventHandler("sale", "onSaleDeliveryHandlersBuildList", array('MTulaExpress', 'Init'));

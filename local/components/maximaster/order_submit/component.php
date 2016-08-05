@@ -42,7 +42,7 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
             );
             $Total = 0;
             while ($arItems = $BasketItems->Fetch()) {
-                $Total += $arItems["QUANTITY"] * $arItems["PRICE"];
+                $Total += (int)$arItems["QUANTITY"] * $arItems["PRICE"];
             }
             $arOrder = array(
                 "WEIGHT" => "0",
@@ -54,7 +54,7 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
             $dbHandler = CSaleDeliveryHandler::GetBySID($arPost["Delivery"]);
             if ($arHandler = $dbHandler->Fetch()) {
                 $delivery["NAME"] = $arHandler["NAME"];
-                $delivery["ID"] = $arHandler["ID"];
+                $delivery["ID"] = $arHandler["SID"];
                 $arProfiles = CSaleDeliveryHandler::GetHandlerCompability($arOrder, $arHandler);
                 if (is_array($arProfiles) && count($arProfiles) > 0) {
                     $arProfiles = array_keys($arProfiles);
@@ -84,11 +84,11 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
                 false,
                 array()
             );
-        }
-        if ($delob = $delres->Fetch()) {
-            $delivery["ID"] = $delob["ID"];
-            $delivery["NAME"] = $delob["NAME"];
-            $delivery["PRICE"] = $delob["PRICE"];
+            if ($delob = $delres->Fetch()) {
+                $delivery["ID"] = $delob["ID"];
+                $delivery["NAME"] = $delob["NAME"];
+                $delivery["PRICE"] = $delob["PRICE"];
+            }
         }
         $payment = array();
         $payres = CSalePaySystem::GetList(
@@ -105,6 +105,7 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
             $payment["NAME"] = $payob["NAME"];
         }
         if(!$arResult["ERROR"]){
+            $arResult["CHECK"] = true;
             $arFields = array(
                 "LID" => "s1",
                 "PERSON_TYPE_ID" => 1,
