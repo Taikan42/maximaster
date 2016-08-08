@@ -24,7 +24,10 @@ class MMBrands extends CBitrixComponent
         $ELEMENT_ID = $_GET["ID"];
         $BRAND_XML = $_GET["BRAND"];
         $SECTION_ID = $_GET["SECTION_ID"];
+        //информация из базы данных
         $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
+        //инициализация класса сущности !Не удалять!
+        $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
         $hlDataClass = $hldata['NAME'] . 'Table';
         $arSelect = Array(
             "ID",
@@ -75,7 +78,7 @@ class MMBrands extends CBitrixComponent
             }
         }
         
-        $result = $hlDataClass::getList(array(
+        $result = $hlDataClass::GetList(array(
             'select' => array('UF_NAME', 'UF_XML_ID'),
             'filter' => array('UF_XML_ID' => $arrXML_ID),
         ));

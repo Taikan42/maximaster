@@ -25,15 +25,15 @@ $arUrlRewrite = array(
         "PATH" => "/news/index.php",
     ),
     array(
-        "CONDITION" => "#^/catalog.*/list/([0-9]+).*#",
-        "RULE" => "SECTION_ID=$1",
+        "CONDITION" => "#^/catalog/(.+)#",
+        "RULE" => "SECTION_CODE=$1",
         "PATH" => "/catalog/list.php",
     ),
-    array(
+    /*array(
         "CONDITION" => "#^/catalog/list/([A_Z]?[a-z]+).*#",
         "RULE" => "BRAND=$1",
         "PATH" => "/catalog/list.php",
-    ),
+    ),*/
     array(
         "CONDITION" => "#^/catalog.*/product/([0-9]+).*#",
         "RULE" => "ID=$1",
