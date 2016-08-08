@@ -59,23 +59,21 @@ class MMBasketSmall extends CBitrixComponent
 
     public function executeComponent()
     {
-        if (CModule::IncludeModule("sale")) {
-            $this->arResult['PATH_TO_BASKET'] = $this->arParams['PATH_TO_BASKET'];
-            $this->arResult['PATH_TO_ORDER'] = $this->arParams['PATH_TO_ORDER'];
+        $this->arResult['PATH_TO_BASKET'] = $this->arParams['PATH_TO_BASKET'];
+        $this->arResult['PATH_TO_ORDER'] = $this->arParams['PATH_TO_ORDER'];
 
-            if ($_SERVER['REQUEST_URI'] != $this->arResult['PATH_TO_BASKET']) {
-                if ($this->arParams['SHOW_NUM_PRODUCTS'] == "Y") {
-                    $this->arResult["NUM_PRODUCTS"] = $this->getNumProduct();
-                }
-                if ($this->arParams['SHOW_TOTAL_PRICE'] == "Y") {
-                    $this->arResult["TOTAL_PRICE"] = $this->getTotalPrice();
-                }
-                $this->arResult['HIDE'] = 'N';
-            } else {
-                $this->arResult['HIDE'] = 'Y';
+        if ($_SERVER['REQUEST_URI'] != $this->arResult['PATH_TO_BASKET']) {
+            if ($this->arParams['SHOW_NUM_PRODUCTS'] == "Y") {
+                $this->arResult["NUM_PRODUCTS"] = $this->getNumProduct();
             }
-            $this->includeComponentTemplate();
+            if ($this->arParams['SHOW_TOTAL_PRICE'] == "Y") {
+                $this->arResult["TOTAL_PRICE"] = $this->getTotalPrice();
+            }
+            $this->arResult['HIDE'] = 'N';
+        } else {
+            $this->arResult['HIDE'] = 'Y';
         }
+        $this->includeComponentTemplate();
         return $this->arResult;
     }
 } ?>
