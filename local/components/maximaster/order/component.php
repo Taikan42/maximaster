@@ -1,6 +1,5 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 $arResult["ACTION_URL"] = $arParams["URL_ORDER_SUBMIT"];
-if (CModule::IncludeModule("sale")) {
     $arResult["DELIVERY"] = array();
     $arResult["PAYMENT"] = array();
     $delres = CSaleDelivery::GetList(
@@ -79,5 +78,4 @@ if (CModule::IncludeModule("sale")) {
             "LOGOTIP" => CFile::ShowImage($payob["PSA_LOGOTIP"], 100, 100, "alt=\"" . $payob["NAME"] . "\"", "")
         );
     };
-}
 $this->IncludeComponentTemplate();

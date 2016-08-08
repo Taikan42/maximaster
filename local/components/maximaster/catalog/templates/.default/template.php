@@ -1,6 +1,5 @@
 <? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
 <? if (!empty($arResult)): ?>
-    <? $APPLICATION->SetTitle($arResult["TITLE"]); ?>
     <section class="catalog">
         <? if (!empty($arResult["SECTION"])): ?>
             <? foreach ($arResult["SECTION"] as $arItem): ?>

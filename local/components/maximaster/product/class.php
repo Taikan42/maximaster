@@ -5,17 +5,22 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 class Product extends \CBitrixComponent
 {
+    public function onPrepareComponentParams($arParams)
+    {
+        $arParams['IBLOCK_ID'] = trim($arParams['IBLOCK_ID']);
+        if ($arParams['IBLOCK_ID'] == '')
+            $arParams['IBLOCK_ID'] = IBLOCK_CATALOG;
+        return $arParams;
+    }
+
     public function executeComponent()
     {
-        if (\CModule::IncludeModule("iblock")) 
-        {
-            $this->arResult = $this->getElement();
+            $this->arResult = $this->getElement($this->arParams['IBLOCK_ID']);
             $this->includeComponentTemplate();
-        }
         return $this->arResult;
     }
     
-    private function getElement()
+    private function getElement($IBLOCK_ID)
     {
         $ELEMENT_ID = $_GET["ID"];
         $arSelect = Array(
@@ -60,9 +65,10 @@ class Product extends \CBitrixComponent
             "COUNTRY" => $ob["PROPERTY_COUNTRY_VALUE"]
         );
         $BrandID = $ob["PROPERTY_BRAND_VALUE"];
-        if ( ! \CModule::IncludeModule('highloadblock'));
-        $hldata = \Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
-
+        //информация из базы данных
+        $hldata = \Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
+        //инициализация класса сущности !Не удалять!
+        $hlentity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
         $hlDataClass = $hldata['NAME'].'Table';
         $result = $hlDataClass::GetList(array(
             'select' => array('UF_NAME'),

@@ -26,7 +26,6 @@ if (preg_match('/^\+[7]\([0-9]{3}\) [0-9]{3}[-][0-9]{2}[-][0-9]{2}$/', $arPost["
     $arResult["ERROR"][] = "Телефон(" . $arPost["phone"] . ") некорректен";
 }
 if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
-    if (CModule::IncludeModule("sale")) {
         $delivery = array();
         if ($arPost["DeliveryHandler-SID=" . $arPost["Delivery"]]) {
             $BasketItems = CSaleBasket::GetList(
@@ -163,7 +162,6 @@ if ($initialsCh and $maskEmailCh and $maskPhoneCh) {
             $arEventFields["COMMENT"] = $arPost["comments"];
             CEvent::Send("MANAGER_ORDER_SUBMIT", SITE_ID, $arEventFields);
         }
-    }
 } else {
     $arResult["CHECK"] = false;
 }

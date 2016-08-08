@@ -1,6 +1,9 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<?
+namespace Maximaster;
 
-class MMBrands extends CBitrixComponent
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+
+class MMBrands extends \CBitrixComponent
 {
     public function onPrepareComponentParams($arParams)
     {
@@ -12,10 +15,8 @@ class MMBrands extends CBitrixComponent
 
     public function executeComponent()
     {
-        if (CModule::IncludeModule("iblock") and CModule::IncludeModule('highloadblock')) {
-            $this->arResult['BRAND'] = $this->getBrands($this->arParams['IBLOCK_ID']);
-            $this->includeComponentTemplate();
-        }
+        $this->arResult['BRAND'] = $this->getBrands($this->arParams['IBLOCK_ID']);
+        $this->includeComponentTemplate();
         return $this->arResult;
     }
 
@@ -30,9 +31,9 @@ class MMBrands extends CBitrixComponent
         $ELEMENT_ID = $_GET["ID"];
         $BRAND_XML = $_GET["BRAND"];
         //информация из базы данных
-        $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
+        $hldata = \Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
         //инициализация класса сущности !Не удалять!
-        $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+        $hlentity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
         $hlDataClass = $hldata['NAME'] . 'Table';
         $arSelect = Array(
             "ID",
@@ -45,14 +46,14 @@ class MMBrands extends CBitrixComponent
                 $arFilter = Array(
                     "ID" => $ELEMENT_ID
                 );
-                $res = CIBlockElement::GetList(
+                $res = \CIBlockElement::GetList(
                     Array(),
                     $arFilter,
                     false,
                     false,
                     $arSelect
                 );
-                $res = $res->fetch();
+                $res = $res->Fetch();
                 $arrXML_ID[] = $res["PROPERTY_BRAND_VALUE"];
             } else {
                 $arrXML_ID[] = $BRAND_XML;
@@ -68,14 +69,14 @@ class MMBrands extends CBitrixComponent
                     "IBLOCK_ID" => $IBLOCK_ID
                 );
             }
-            $res = CIBlockElement::GetList(
+            $res = \CIBlockElement::GetList(
                 Array(),
                 $arFilter,
                 false,
                 false,
                 $arSelect
             );
-            while ($ob = $res->fetch()) {
+            while ($ob = $res->Fetch()) {
                 $brand = $ob["PROPERTY_BRAND_VALUE"];
                 if ( ! in_array($brand, $arrXML_ID)) {
                     $arrXML_ID[] = $brand;
@@ -87,7 +88,7 @@ class MMBrands extends CBitrixComponent
             'select' => array('UF_NAME', 'UF_XML_ID'),
             'filter' => array('UF_XML_ID' => $arrXML_ID),
         ));
-        while ($res = $result->fetch()) {
+        while ($res = $result->Fetch()) {
             $arBrands["BRAND"][] = array(
                 "NAME" => $res["UF_NAME"],
                 "XML_ID" => $res["UF_XML_ID"]

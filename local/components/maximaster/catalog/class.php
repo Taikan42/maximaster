@@ -97,7 +97,7 @@ class Catalog extends \CBitrixComponent
                     "SECTION_PAGE_URL" => $ob['SECTION_PAGE_URL'],
                     "PICTURE" => $ob['PICTURE']
                 );
-                if (!empty($arElements["TITLE"])) {
+                if (!$arElements["TITLE"]) {
                     $arElements["TITLE"] = $ob["NAME"];
                 }
             }
