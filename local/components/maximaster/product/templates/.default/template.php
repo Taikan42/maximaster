@@ -26,7 +26,7 @@ $APPLICATION->SetTitle($arResult["NAME"]);
         <p><?echo $arResult["TEXT"]?></p>
         <div class="popup" id="popup1">
             <div class="popup-content">
-                <a href="#" class="continue""> Продолжить </a>
+                <a href="#" class="continue"">Продолжить</a>
                 <a href="/local/templates/maximaster/cart/index.php">К корзине</a>
             </div>
         </div>

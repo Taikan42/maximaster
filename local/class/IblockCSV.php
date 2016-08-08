@@ -1,5 +1,5 @@
 <?php
-namespace maximaster;
+namespace Maximaster;
 
 
 class IblockCSV
@@ -184,17 +184,17 @@ class IblockCSV
         //ищем родителя
         $idParent = $this->Parent($line[self::PARENT_CODE], $line[self::CODE]);
         //заполняем поля для обновления/добавления
-        $PROP = array(
-            "PRICE" => $line[self::PRICE],
-            "NUMBER" => $line[self::NUMBER],
-            "COUNTRY" => $line[self::COUNTRY],
-            "BRAND" => $line[self::BREND]
-        );
+
         $arFields = Array(
             "IBLOCK_SECTION_ID" => $idParent,
             "IBLOCK_ID" => $this->idBlock,
             "ACTIVE" => "Y",
-            "PROPERTY_VALUES" => $PROP,
+            "PROPERTY_VALUES" => array(
+                "PRICE" => $line[self::PRICE],
+                "NUMBER" => $line[self::NUMBER],
+                "COUNTRY" => $line[self::COUNTRY],
+                "BRAND" => $line[self::BREND]
+            ),
             "CODE" => $line[self::CODE],
             "NAME" => $line[self::NAME],
             "SORT" => $line[self::SORT],

@@ -1,16 +1,22 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<?
+namespace Maximaster;
 
-class MMCatalog extends CBitrixComponent
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+
+class Product extends \CBitrixComponent
 {
     public function executeComponent()
     {
-        if (CModule::IncludeModule("iblock")) {
+        if (\CModule::IncludeModule("iblock")) 
+        {
             $this->arResult = $this->getElement();
             $this->includeComponentTemplate();
         }
         return $this->arResult;
     }
-    private function getElement(){
+    
+    private function getElement()
+    {
         $ELEMENT_ID = $_GET["ID"];
         $arSelect = Array(
             "ID",
@@ -24,16 +30,20 @@ class MMCatalog extends CBitrixComponent
         $arFilter = Array(
             "ID" => $ELEMENT_ID
         );
-        $res = CIBlockElement::GetList(
-            Array(),
+        $ob = \CIBlockElement::GetList(
+            array(),
             $arFilter,
             false,
             false,
-            $arSelect);
-        $ob = $res->Fetch();
-        $CPres = \CPrice::GetList([],[
+            $arSelect
+        )->Fetch();
+
+        $CPres = \CPrice::GetList(
+            [],
+            [
                 "PRODUCT_ID" => $ob["ID"],
-                "CATALOG_GROUP_ID" => 1]
+                "CATALOG_GROUP_ID" => BASE_PRICE
+            ]
         );
         $arr = $CPres->Fetch();
         $arrCprise = \CPrice::GetByID($arr["ID"]);
@@ -50,15 +60,15 @@ class MMCatalog extends CBitrixComponent
             "COUNTRY" => $ob["PROPERTY_COUNTRY_VALUE"]
         );
         $BrandID = $ob["PROPERTY_BRAND_VALUE"];
-        if (!CModule::IncludeModule('highloadblock'));
-        $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
-        $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
+        if ( ! \CModule::IncludeModule('highloadblock'));
+        $hldata = \Bitrix\Highloadblock\HighloadBlockTable::getById(4)->fetch();
+
         $hlDataClass = $hldata['NAME'].'Table';
-        $result = $hlDataClass::getList(array(
+        $result = $hlDataClass::GetList(array(
             'select' => array('UF_NAME'),
             'filter' => array('UF_XML_ID'=>$BrandID),
         ));
-        $res = $result->fetch();
+        $res = $result->Fetch();
         $arElement["BRAND"] = $res["UF_NAME"];
         return $arElement;
     }

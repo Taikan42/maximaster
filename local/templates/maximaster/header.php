@@ -3,21 +3,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <? use Bitrix\Main\Page\Asset;
+    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/reset.css");
+    Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . "/css/style.css");
+    CJSCore::Init(array("jquery"));
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/scripts/zoomsl-3.0.min.js");
+    Asset::getInstance()->addJs(SITE_TEMPLATE_PATH . "/scripts/script.js");?>
     <? $APPLICATION->ShowHead() ?>
     <title><? $APPLICATION->ShowTitle() ?></title>
-    <link type="text/css" rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/css/reset.css"/>
-    <link type="text/css" rel="stylesheet" href="<?= SITE_TEMPLATE_PATH ?>/css/style.css"/>
-    <?
-    CJSCore::Init(array("jquery"));
-    ?>
 </head>
 <body>
 <? $APPLICATION->ShowPanel(); ?>
 <header>
-    <p>Приветствие</p>
+    <a href="/"><p>Приветствие</p></a>
     <div class="mobile-icon">
         <div class="navigate navigate-static" id="head-navigate">
-
             <? $APPLICATION->IncludeComponent(
                 "bitrix:menu",
                 "top",

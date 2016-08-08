@@ -6,7 +6,7 @@ class MMBrands extends CBitrixComponent
     {
         $arParams['IBLOCK_ID'] = trim($arParams['IBLOCK_ID']);
         if ($arParams['IBLOCK_ID'] == '')
-            $arParams['IBLOCK_ID'] = '4';
+            $arParams['IBLOCK_ID'] = IBLOCK_CATALOG;
         return $arParams;
     }
 
@@ -25,7 +25,6 @@ class MMBrands extends CBitrixComponent
         $BRAND_XML = $_GET["BRAND"];
         $SECTION_ID = $_GET["SECTION_ID"];
         $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
-        $hlentity = Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
         $hlDataClass = $hldata['NAME'] . 'Table';
         $arSelect = Array(
             "ID",
@@ -66,12 +65,16 @@ class MMBrands extends CBitrixComponent
                 $arFilter,
                 false,
                 false,
-                $arSelect);
+                $arSelect
+            );
             while ($ob = $res->fetch()) {
                 $brand = $ob["PROPERTY_BRAND_VALUE"];
-                if (!in_array($brand, $arrXML_ID)) $arrXML_ID[] = $brand;
+                if ( ! in_array($brand, $arrXML_ID)) {
+                    $arrXML_ID[] = $brand;
+                }
             }
         }
+        
         $result = $hlDataClass::getList(array(
             'select' => array('UF_NAME', 'UF_XML_ID'),
             'filter' => array('UF_XML_ID' => $arrXML_ID),

@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ?>
 <? $APPLICATION->IncludeComponent("maximaster:catalog", ".default",
     array(
-        "IBLOCK_ID" => "4",
+        "IBLOCK_ID" => IBLOCK_CATALOG,
         "BASKET_PAGE" => "/local/templates/maximaster/cart/index.php",
         "SECTIONS" => "Y"
     ),
