@@ -3,7 +3,7 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 ?>
 <?$APPLICATION->IncludeComponent(
     "bitrix:catalog.filter",
-    "",
+    "template1",
     Array(
         "CACHE_GROUPS" => "Y",
         "CACHE_TIME" => "36000000",

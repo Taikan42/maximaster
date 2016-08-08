@@ -29,8 +29,12 @@ class Catalog extends \CBitrixComponent
 
     private function getElements($IBLOCK_ID, $SECTIONS)
     {
-        $CODE = explode('/', $_GET["SECTION_CODE"]);
-        $SECTION_CODE = $CODE[count($CODE)-1];
+        //Обработка параметра SECTION_CODE_PATH
+        $Params_URL = explode('/', $_GET["SECTION_CODE_PATH"]);
+        $Params = $Params_URL[count($Params_URL) - 1];
+        $arParams = explode('?', $Params);
+        $SECTION_CODE = $arParams[0];
+        //
         $BRAND_XML = $_GET["BRAND"];
         $arElements = array();
         $FilterFoElements = array();
@@ -62,24 +66,6 @@ class Catalog extends \CBitrixComponent
                 "SECTION_CODE" => $SECTION_CODE,
                 "INCLUDE_SUBSECTIONS" => "Y"
             );
-        } elseif ($BRAND_XML) {
-            /*Страница фильтра по бренду*/
-            if (\CModule::IncludeModule('highloadblock')) {
-                //информация из базы данных
-                $hldata = \Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
-                //инициализация класса сущности !Не удалять!
-                $hlentity = \Bitrix\Highloadblock\HighloadBlockTable::compileEntity($hldata);
-                $hlDataClass = $hldata['NAME'] . 'Table';
-                $result = $hlDataClass::GetList(array(
-                    'select' => array('UF_NAME'),
-                    'filter' => array('UF_XML_ID' => $BRAND_XML),
-                ));
-                $res = $result->Fetch();
-                $arElements["TITLE"] = $res["UF_NAME"];
-                $FilterFoElements = Array(
-                    "PROPERTY_BRAND" => $BRAND_XML
-                );
-            }
         } else {
             /*Главная страница*/
             $res = \CIBlock::GetList(
@@ -121,6 +107,9 @@ class Catalog extends \CBitrixComponent
             $arElements["ELEMENT"] = array();
             if ($GLOBALS["arrFilter"]) {
                 $FilterFoElements = array_merge($FilterFoElements, $GLOBALS["arrFilter"]);
+            }
+            if ($BRAND_XML) {
+                $FilterFoElements["PROPERTY_BRAND"] = $BRAND_XML;
             }
             $res = \CIBlockElement::GetList(
                 array(),

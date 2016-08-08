@@ -26,14 +26,9 @@ $arUrlRewrite = array(
     ),
     array(
         "CONDITION" => "#^/catalog/(.+)#",
-        "RULE" => "SECTION_CODE=$1",
+        "RULE" => "SECTION_CODE_PATH=$1",
         "PATH" => "/catalog/list.php",
     ),
-    /*array(
-        "CONDITION" => "#^/catalog/list/([A_Z]?[a-z]+).*#",
-        "RULE" => "BRAND=$1",
-        "PATH" => "/catalog/list.php",
-    ),*/
     array(
         "CONDITION" => "#^/catalog.*/product/([0-9]+).*#",
         "RULE" => "ID=$1",

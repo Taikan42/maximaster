@@ -21,9 +21,14 @@ class MMBrands extends CBitrixComponent
 
     private function getBrands($IBLOCK_ID)
     {
+        //Обработка параметра SECTION_CODE_PATH
+        $Params_URL = explode('/', $_GET["SECTION_CODE_PATH"]);
+        $Params = $Params_URL[count($Params_URL) - 1];
+        $arParams = explode('?', $Params);
+        $SECTION_CODE = $arParams[0];
+        //
         $ELEMENT_ID = $_GET["ID"];
         $BRAND_XML = $_GET["BRAND"];
-        $SECTION_ID = $_GET["SECTION_ID"];
         //информация из базы данных
         $hldata = Bitrix\Highloadblock\HighloadBlockTable::getById($IBLOCK_ID)->fetch();
         //инициализация класса сущности !Не удалять!
@@ -53,9 +58,9 @@ class MMBrands extends CBitrixComponent
                 $arrXML_ID[] = $BRAND_XML;
             }
         } else {
-            if ($SECTION_ID) {
+            if ($SECTION_CODE) {
                 $arFilter = Array(
-                    "SECTION_ID" => $SECTION_ID,
+                    "SECTION_CODE" => $SECTION_CODE,
                     "INCLUDE_SUBSECTIONS" => "Y"
                 );
             } else {
@@ -88,6 +93,7 @@ class MMBrands extends CBitrixComponent
                 "XML_ID" => $res["UF_XML_ID"]
             );
         }
+        $arBrands["URL"] = $_SERVER['REQUEST_URI'];
         return $arBrands["BRAND"];
     }
 }

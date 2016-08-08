@@ -4,7 +4,7 @@
         <ul>
             <? foreach ($arResult["BRAND"] as $arItem): ?>
                 <li>
-                    <a href="<? echo "/catalog/list/" . $arItem["XML_ID"]; ?>">
+                    <a href="<? echo $arResult["URL"] ."?BRAND=". $arItem["XML_ID"]; ?>">
                         <? echo $arItem["NAME"]; ?>
                     </a>
                 </li>
