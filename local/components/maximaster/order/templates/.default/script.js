@@ -68,9 +68,7 @@ $(document).ready(function () {
 });
 
 $('body').on('click', "[name='Delivery']", function () {
-    var id = $(this).attr('id');
-    console.log("click");
-    console.log(id);
+    var id = $(this).attr('value');
     $.ajax({
         type: 'POST',
         url: "/local/components/maximaster/order/PaySystems.php",

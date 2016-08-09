@@ -111,7 +111,7 @@ class Catalog extends \CBitrixComponent
             if ($BRAND_XML) {
                 $FilterFoElements["PROPERTY_BRAND"] = $BRAND_XML;
             }
-            $page = intval($_GET["page"]);
+            $page = intval($_GET["PAGEN_1"]);
             $res = \CIBlockElement::GetList(
                 array(),
                 $FilterFoElements,

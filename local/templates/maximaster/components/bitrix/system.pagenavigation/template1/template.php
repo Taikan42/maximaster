@@ -17,12 +17,10 @@ $navQueryStringFull  = ($arResult["NavQueryString"] != "" ? "?".$arResult["NavQu
 
 ?>
 <div class="pagenavigation">
-	<?
-	/*<div>
+	<div>
 		<?php echo $arResult["NavTitle"] ?>
 		<?php echo $arResult["NavFirstRecordShow"] ?>—<?php echo $arResult["NavLastRecordShow"] ?> из <?php echo $arResult["NavRecordCount"] ?>
-	</div>*/
-	?>
+	</div>
 
 	<div class="numbers">
 		<?php while ($arResult["nStartPage"] <= $arResult["nEndPage"]) { ?>
@@ -31,7 +29,7 @@ $navQueryStringFull  = ($arResult["NavQueryString"] != "" ? "?".$arResult["NavQu
 			<?php } elseif ((1 == $arResult["nStartPage"]) && (false == $arResult["bSavePage"])) { ?>
 				<a href="<?php echo $arResult["sUrlPath"] ?><?php echo $navQueryStringFull ?>"><?php echo $arResult["nStartPage"] ?></a>
 			<?php } else { ?>
-				<a href="<?php echo $arResult["sUrlPath"] ?>?page=<?php echo $arResult["nStartPage"] ?>"><?php echo $arResult["nStartPage"] ?></a>
+				<a href="<?php echo $arResult["sUrlPath"] ?>?<?php echo $navQueryString ?>PAGEN_<?php echo $arResult["NavNum"] ?>=<?php echo $arResult["nStartPage"] ?>"><?php echo $arResult["nStartPage"] ?></a>
 			<?php } ?>
 			<?php $arResult["nStartPage"]++ ?>
 		<?php } ?>

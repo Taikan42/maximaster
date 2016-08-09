@@ -1,7 +1,5 @@
 <? require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include.php");
-$PostID = $_POST["id"];
-$Post = explode('-', $PostID);
-$DeliveryID = $Post[1];
+$DeliveryID = $_POST["id"];
 $delres = CSaleDelivery2PaySystem::GetList(
     array(
         "DELIVERY_ID" => $DeliveryID
