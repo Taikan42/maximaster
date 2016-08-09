@@ -1,0 +1,39 @@
+.form-order table{
+    margin: auto;
+    min-width: 350px;
+    text-align: left;
+}
+.form-order table td{
+    vertical-align: middle;
+}
+.form-order table td+td{
+    padding: 5px;
+
+}
+.form-order input, textarea{
+    width: 100%;
+    min-height: 20px;
+    border-radius: 4px;
+}
+.form-order input[type="radio"]{
+    width: auto;
+    height: 50px;
+}
+.form-order .radio_wrap{
+    display: inline-block;
+}
+.form-order input+p{
+    text-align: center;
+    color: #959595;
+}
+.form-order .hide{
+    display: none;
+}
+.form-order .submit{
+    width: 130px;
+    height: 25px;
+    margin-top: 20px;
+    border-radius: 7px;
+    font-size: 1.05em;
+    cursor: pointer;
+}

@@ -1,19 +1,33 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die(); ?>
+<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+$APPLICATION->SetTitle("Оформить заказ");
+?>
 <? if (!empty($arResult)): ?>
     <div class="form-order">
         <form action="<? echo $arResult["ACTION_URL"] ?>" class="order" id="sale_order" method="post">
             <table>
                 <tr>
-                    <td><label for="name">Имя: </label></td>
-                    <td><input type="text" id="name" name="name" class="form_text empty_field"/></td>
+                    <td>
+                        <label for="name">Имя: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="name" name="name" class="form_text empty_field"/>
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="surname">Фамилия: </label></td>
-                    <td><input type="text" id="surname" name="surname" class="form_text empty_field"/></td>
+                    <td>
+                        <label for="surname">Фамилия: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="surname" name="surname" class="form_text empty_field"/>
+                    </td>
                 </tr>
                 <tr>
-                    <td><label for="middle_name">Отчество: </label></td>
-                    <td><input id="middle_name" name="middle_name" class="form_text empty_field"/></td>
+                    <td>
+                        <label for="middle_name">Отчество: </label>
+                    </td>
+                    <td>
+                        <input id="middle_name" name="middle_name" class="form_text empty_field"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -37,8 +51,8 @@
                         <span>Местонахождение: </span>
                     </td>
                     <td>
-                        <?$APPLICATION->IncludeComponent(
-                            "bitrix:sale.location.selector.steps",
+                        <? $APPLICATION->IncludeComponent(
+                            "bitrix:sale.location.selector.search",
                             "",
                             Array(
                                 "CACHE_TIME" => "36000000",
@@ -54,7 +68,7 @@
                                 "SHOW_DEFAULT_LOCATIONS" => "N",
                                 "SUPPRESS_ERRORS" => "N"
                             )
-                        );?>
+                        ); ?>
                     </td>
                 </tr>
                 <tr>
@@ -76,32 +90,33 @@
                                        value="<? echo $arItem["ID"] ?>"/>
                                 <label for="del-<? echo $arItem["ID"] ?>"><? echo $arItem["LOGOTIP"] ?></label>
                                 <input type="hidden"
-                                       name="DeliveryHandler-SID=<? echo $arItem["ID"] ?>"
-                                       value="<? echo $arItem["HANDLER"] ?>">
+                                       name="permiss_types_payment-delID=<? echo $arItem["ID"] ?>"
+                                value=<? echo implode(",", $arItem["PAYMENT_ID"]) ?>>
+                                <? if ($arItem["HANDLER"] == "Y"): ?>
+                                    <input type="hidden"
+                                           name="DeliveryHandler-SID=<? echo $arItem["ID"] ?>"
+                                    value= "true">
+                                <? endif ?>
                             </div>
                         <? endforeach; ?>
                     </td>
                 </tr>
-                <tr>
+                <tr class="payment hide">
                     <td>
-                        <span>Оплата: </span>
+                        <span>Способ оплаты: </span>
                     </td>
                     <td>
-                        <div id="PaySystem">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>Стоимость доставки: </span>
-                    </td>
-                    <td>
-                        <div id="СostDelivery">
-                        </div>
+                        <? foreach ($arResult["PAYMENT"] as $arItem): ?>
+                            <div class="radio_wrap payment_wrap paymentID-<? echo $arItem["ID"] ?> hide">
+                                <input type="radio" name="Payment" id="pay-<? echo $arItem["ID"] ?>"
+                                       value="<? echo $arItem["ID"] ?>"/>
+                                <label for="pay-<? echo $arItem["ID"] ?>"><? echo $arItem["LOGOTIP"] ?></label>
+                            </div>
+                        <? endforeach; ?>
                     </td>
                 </tr>
             </table>
             <input type="submit" value="Принять" class="submit"/>
         </form>
     </div>
-<? endif; ?>
+<? endif ?>

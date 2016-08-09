@@ -30,6 +30,7 @@ $(document).ready(function () {
                 required: true
             },
             Payment: {
+                minlength: 2,
                 required: true
             }
         },
@@ -64,67 +65,18 @@ $(document).ready(function () {
             }
         }
     });
-    var deliv = $("[name='Delivery']");
-    var check_pay = false;
-    var selectID;
-    deliv.click(function () {
-        if (!check_pay) {
-            $(".payment").removeClass("hide");
-            check_pay = true;
-        }
-        if ($(this).val() != selectID) {
-            selectID = $(this).val();
-            /*ищем скрытый инпут с ограничениями для типа платежей для данного способа получения
-             * записываем айди разрешенных типов платежей в массив*/
-            var Pay_ID = $("[name=\'permiss_types_payment-delID=" + $(this).val() + "\']").val().split(',');
-            $('.payment_wrap').each(function () {
-                /*скрываем все платежы и снимаем выделение*/
-                $(this).addClass("hide");
-                $(this).children().removeAttr("checked");
-            });
-            for (index = Pay_ID.length - 1; index >= 0; --index) {
-                /*показываем только разрешенные платежи*/
-                $(".paymentID-" + String(Pay_ID[index])).removeClass("hide");
-            }
+});
+
+$('body').on('click', "[name='Delivery']", function () {
+    var id = $(this).attr('id');
+    console.log("click");
+    console.log(id);
+    $.ajax({
+        type: 'POST',
+        url: "/local/components/maximaster/order/PaySystems.php",
+        data: {id: id},
+        success: function(out){
+            $("#PaySystem").html(out);
         }
     });
-    /*Проверка и выделение пустых полей*/
-    /*
-     $('.form_text').blur(function() {
-     if ($(this).val()){
-     $(this).css("border-color","green");
-     $(this).removeClass('empty_field');
-     } else {
-     $(this).css("border-color","red");
-     $(this).addClass('empty_field');
-     }
-     });*/
-    /*Проверка и выделение для email*/
-    /*
-     $('#user_email').blur(function() {
-     if($(this).val() != '') {
-     var pattern = /.+@.+\..+/i;
-     if(pattern.test($(this).val())){
-     $(this).css("border-color","green");
-     $(this).removeClass('empty_field');
-     $(this).next().html("");
-     } else {
-     $(this).css("border-color","red");
-     $(this).addClass('empty_field');
-     $(this).next().html("неккоректный email");
-     }
-     } else {
-     $(this).css("border-color","red");
-     $(this).addClass('empty_field');
-     }
-     });*/
-    /*Деактивация принятия формы при пустых полях*/
-    /*
-     $('input').blur(function () {
-     if($('form').find('.empty_field').size() > 0){
-     $('.submit').attr('disabled','disabled');
-     } else {
-     $('.submit').removeAttr('disabled');
-     }
-     });*/
 });
