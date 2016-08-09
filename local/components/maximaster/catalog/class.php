@@ -111,11 +111,16 @@ class Catalog extends \CBitrixComponent
             if ($BRAND_XML) {
                 $FilterFoElements["PROPERTY_BRAND"] = $BRAND_XML;
             }
+            $page = intval($_GET["page"]);
             $res = \CIBlockElement::GetList(
                 array(),
                 $FilterFoElements,
                 false,
-                false,
+                Array(
+                    "nPageSize"=> 5,
+                    "iNumPage"=> ($page ? $page : 1) ,
+                    "bShowAll"=> false
+                ),
                 array(
                     "ID",
                     "IBLOCK_ID",
@@ -126,6 +131,8 @@ class Catalog extends \CBitrixComponent
                     "PREVIEW_PICTURE"
                 )
             );
+            $arElements["NAV"] = $res->GetPageNavStringEx($navComponentObject, "Страницы:", "template1");
+            //$arElements["NAV"] = GetPageNavString('','template1', 'Y', 'main.pagenavigation');
             $elements_ID = array();
             while ($ob = $res->GetNext()) {//GetNext для коректного вывода DETAIL_PAGE_URL
                 $elements_ID[] = $ob["ID"];

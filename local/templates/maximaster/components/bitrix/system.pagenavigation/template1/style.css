@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+.pagenavigation span.active, .pagenavigation a {
+	display: inline-block;
+	padding: 0.2em 0.3em;
+	height: 30px;
+	width: 30px;
+	border: 2px solid cornflowerblue;
+	border-radius: 15px;
+}
+.pagenavigation a:hover{
+	background: #ffc879;
+}
+.pagenavigation span.active {
+	background: #f49110;
+}
+.pagenavigation .numbers {
+	font-size: 1.2em;
+	margin: 0.3em 0;
+}

@@ -1,6 +1,8 @@
-<? if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+<? namespace Maximaster;
 
-class MMBasketSmall extends CBitrixComponent
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
+
+class BasketSmall extends \CBitrixComponent
 {
     public function onPrepareComponentParams($arParams)
     {
@@ -25,10 +27,10 @@ class MMBasketSmall extends CBitrixComponent
 
     private function getNumProduct()
     {
-        $BasketItems = CSaleBasket::GetList(
+        $BasketItems = \CSaleBasket::GetList(
             array(),
             array(
-                "FUSER_ID" => CSaleBasket::GetBasketUserID(),
+                "FUSER_ID" => \CSaleBasket::GetBasketUserID(),
                 "LID" => SITE_ID,
                 "ORDER_ID" => "NULL"
             ),
@@ -39,10 +41,10 @@ class MMBasketSmall extends CBitrixComponent
 
     private function getTotalPrice()
     {
-        $BasketItems = CSaleBasket::GetList(
+        $BasketItems = \CSaleBasket::GetList(
             array(),
             array(
-                "FUSER_ID" => CSaleBasket::GetBasketUserID(),
+                "FUSER_ID" => \CSaleBasket::GetBasketUserID(),
                 "LID" => SITE_ID,
                 "ORDER_ID" => "NULL"
             ),

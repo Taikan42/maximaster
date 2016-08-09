@@ -32,6 +32,9 @@
                     </div>
                 </div>
             <? endforeach ?>
+            <?
+                echo $arResult["NAV"]
+            ?>
         <? endif ?>
         <? if (!empty($arResult["BASKET_PAGE"])): ?>
             <div class="popup" id="popup1">
