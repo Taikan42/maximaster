@@ -131,7 +131,7 @@ class Catalog extends \CBitrixComponent
                     "PREVIEW_PICTURE"
                 )
             );
-            $arElements["NAV"] = $res->GetPageNavStringEx($navComponentObject, "Страницы:", "template1");
+            $arElements["NAV"] = $res->GetPageNavStringEx($navComponentObject, "Товары:", "template1");
             //$arElements["NAV"] = GetPageNavString('','template1', 'Y', 'main.pagenavigation');
             $elements_ID = array();
             while ($ob = $res->GetNext()) {//GetNext для коректного вывода DETAIL_PAGE_URL

@@ -4,19 +4,19 @@
         <form action="<? echo $arResult["ACTION_URL"] ?>" class="order" id="sale_order" method="post">
             <table>
                 <tr>
-                    <td><label for="name">Имя: </label></td>
+                    <td class="label"><label for="name">Имя: </label></td>
                     <td><input type="text" id="name" name="name" class="form_text empty_field"/></td>
                 </tr>
                 <tr>
-                    <td><label for="surname">Фамилия: </label></td>
+                    <td class="label"><label for="surname">Фамилия: </label></td>
                     <td><input type="text" id="surname" name="surname" class="form_text empty_field"/></td>
                 </tr>
                 <tr>
-                    <td><label for="middle_name">Отчество: </label></td>
+                    <td class="label"><label for="middle_name">Отчество: </label></td>
                     <td><input id="middle_name" name="middle_name" class="form_text empty_field"/></td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="user_phone">Телефон: </label>
                     </td>
                     <td>
@@ -24,7 +24,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="user_email">Email: </label>
                     </td>
                     <td>
@@ -33,7 +33,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <span>Местонахождение: </span>
                     </td>
                     <td>
@@ -58,7 +58,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <label for="user_comments">Коментарии: </label>
                     </td>
                     <td>
@@ -66,7 +66,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <span>Получение: </span>
                     </td>
                     <td>
@@ -82,8 +82,8 @@
                         <? endforeach; ?>
                     </td>
                 </tr>
-                <tr>
-                    <td>
+                <tr class="PaySystem hide">
+                    <td class="label">
                         <span>Оплата: </span>
                     </td>
                     <td>
@@ -92,7 +92,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="label">
                         <span>Стоимость доставки: </span>
                     </td>
                     <td>
@@ -103,5 +103,7 @@
             </table>
             <input type="submit" value="Принять" class="submit"/>
         </form>
+        <div class="load hide"></div>
     </div>
 <? endif; ?>
+

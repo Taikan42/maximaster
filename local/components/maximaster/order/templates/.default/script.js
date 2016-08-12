@@ -26,11 +26,13 @@ $(document).ready(function () {
                 required: true,
                 email: true
             },
+            location: {
+                required: true
+            },
             Delivery: {
                 required: true
             },
             Payment: {
-                minlength: 2,
                 required: true
             }
         },
@@ -65,16 +67,45 @@ $(document).ready(function () {
             }
         }
     });
+    var deliv = $("[name=Delivery]");
+    var selectID;
+    var checkhide = true;
+    deliv.click(function () {
+        var id = $(this).val();
+        console.log("click");
+        console.log(id);
+        if (id != selectID) {
+            var selectID = id;
+            var $load = $('.load');
+            $load.show();
+            $.ajax({
+                type: 'POST',
+                url: "/local/components/maximaster/order/PaySystems.php",
+                data: {id: id},
+                success: function(out){
+                    $("#PaySystem").html(out);
+                    if (checkhide){
+                        $('.PaySystem').show();
+                        checkhide = false;
+                    }
+                    $load.hide();
+                }
+            });
+        }
+    });
 });
-
+/*
 $('body').on('click', "[name='Delivery']", function () {
     var id = $(this).attr('value');
+    var $PaySys = $('.PaySystem');
+    $PaySys.hide();
     $.ajax({
         type: 'POST',
         url: "/local/components/maximaster/order/PaySystems.php",
         data: {id: id},
         success: function(out){
             $("#PaySystem").html(out);
+            $PaySys.show();
         }
     });
-});
+});*/
