@@ -42,7 +42,6 @@ class FormOrder extends \CBitrixComponent
         while ($delob = $delres->Fetch()) {
             $ID = $delob["ID"];
             $arDelivery[$ID] = array(
-                "HANDLER" => "N",
                 "ID" => $ID,
                 "LOGOTIP" => \CFile::ShowImage($delob["LOGOTIP"], 100, 100, "alt=\"" . $delob["NAME"] . "\"", "")
             );
@@ -54,7 +53,6 @@ class FormOrder extends \CBitrixComponent
         while ($delob = $delres->Fetch()) {
             $ID = $delob["SID"];
             $arDelivery[$ID] = array(
-                "HANDLER" => "Y",
                 "ID" => $ID,
                 "LOGOTIP" => \CFile::ShowImage($delob["LOGOTIP"], 100, 100, "alt=\"" . $delob["NAME"] . "\"", "")
             );

@@ -46,6 +46,10 @@
 .form-order input.error {
     border: 1px dotted #f00;
 }
+.form-order label.error {
+    color: #f00;
+    font-size: 0.9em;
+}
 .form-order .load{
     z-index: 1000;
     width: 100%;
@@ -55,4 +59,7 @@
     position: fixed;
     top: 0px;
     left: 0px;
+}
+.form-order #СostDelivery{
+    text-align: center;
 }

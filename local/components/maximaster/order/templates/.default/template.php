@@ -37,8 +37,8 @@
                         <span>Местонахождение: </span>
                     </td>
                     <td>
-                        <?$APPLICATION->IncludeComponent(
-                            "bitrix:sale.location.selector.steps",
+                        <? $APPLICATION->IncludeComponent(
+                            "bitrix:sale.location.selector.search",
                             "",
                             Array(
                                 "CACHE_TIME" => "36000000",
@@ -54,7 +54,8 @@
                                 "SHOW_DEFAULT_LOCATIONS" => "N",
                                 "SUPPRESS_ERRORS" => "N"
                             )
-                        );?>
+                        ); ?>
+                        <span class="er"></span>
                     </td>
                 </tr>
                 <tr>
@@ -75,9 +76,6 @@
                                 <input type="radio" name="Delivery" id="del-<? echo $arItem["ID"] ?>"
                                        value="<? echo $arItem["ID"] ?>"/>
                                 <label for="del-<? echo $arItem["ID"] ?>"><? echo $arItem["LOGOTIP"] ?></label>
-                                <input type="hidden"
-                                       name="DeliveryHandler-SID=<? echo $arItem["ID"] ?>"
-                                       value="<? echo $arItem["HANDLER"] ?>">
                             </div>
                         <? endforeach; ?>
                     </td>
@@ -91,7 +89,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr class="Cost">
                     <td class="label">
                         <span>Стоимость доставки: </span>
                     </td>

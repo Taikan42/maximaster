@@ -2,6 +2,20 @@ jQuery(function ($) {
     $('#user_phone').mask("+7(999) 999-99-99");
 });
 $(document).ready(function () {
+    $.validator.addMethod("loc", function() {
+        var val = $(".dropdown-field").val();
+        if (val && val > 0){
+            Cost();
+            return true;
+        } else{
+            return false;
+        }
+    }, "Введите ваше местоположение");
+    $.validator.addClassRules({
+        'bx-ui-sls-fake': {
+            loc: true
+        }
+    });
     $('#sale_order').validate({
         rules: {
             name: {
@@ -25,9 +39,6 @@ $(document).ready(function () {
             email: {
                 required: true,
                 email: true
-            },
-            location: {
-                required: true
             },
             Delivery: {
                 required: true
@@ -67,21 +78,19 @@ $(document).ready(function () {
             }
         }
     });
-    var deliv = $("[name=Delivery]");
-    var selectID;
+    var selectID = 0;
     var checkhide = true;
-    deliv.click(function () {
+    $("[name=Delivery]").click(function () {
         var id = $(this).val();
-        console.log("click");
-        console.log(id);
         if (id != selectID) {
-            var selectID = id;
+            selectID = id;
             var $load = $('.load');
             $load.show();
+            Cost();
             $.ajax({
                 type: 'POST',
-                url: "/local/components/maximaster/order/PaySystems.php",
-                data: {id: id},
+                url: "/local/components/maximaster/order/ajax.php",
+                data: {id: id, type: "PaySys"},
                 success: function(out){
                     $("#PaySystem").html(out);
                     if (checkhide){
@@ -94,18 +103,19 @@ $(document).ready(function () {
         }
     });
 });
-/*
-$('body').on('click', "[name='Delivery']", function () {
-    var id = $(this).attr('value');
-    var $PaySys = $('.PaySystem');
-    $PaySys.hide();
-    $.ajax({
-        type: 'POST',
-        url: "/local/components/maximaster/order/PaySystems.php",
-        data: {id: id},
-        success: function(out){
-            $("#PaySystem").html(out);
-            $PaySys.show();
-        }
-    });
-});*/
+function Cost() {
+    var idDelivery = $('input[name=Delivery]:checked').val();
+    var location = $(".dropdown-field").val();
+    if (location > 0 && idDelivery){
+        $.ajax({
+            type: 'POST',
+            url: "/local/components/maximaster/order/ajax.php",
+            data: {idDelivery: idDelivery, location: location, type: "Cost"},
+            success: function(out){
+                $("#СostDelivery").html(out);
+            }
+        });
+    } else {
+        $("#СostDelivery").html("");
+    }
+}
