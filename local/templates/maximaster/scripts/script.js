@@ -22,20 +22,21 @@ $(document).ready(function () {
             }
         }
     });
+    var $body = $('body');
+    $body.on('click', 'button', function () {
+        PopUpShow();
+        var id = $(this).attr('id');
+        var quantity = $('.QUANTITY').attr('value');
+        add2basket(id, quantity ? quantity : 1);
+    });
+    $body.on('click', '.popup', function () {
+        PopUpHide();
+    });
+    $body.on('click', 'a.continue', function () {
+        PopUpHide();
+    });
 });
-var $body = $('body');
-$body.on('click', 'button', function () {
-    PopUpShow();
-    var id = $(this).attr('id');
-    var quantity = $('.QUANTITY').attr('value');
-    add2basket(id, quantity ? quantity : 1);
-});
-$body.on('click', '.popup', function () {
-    PopUpHide();
-});
-$body.on('click', 'a.continue', function () {
-    PopUpHide();
-});
+
 function PopUpShow() {
     $("#popup1").show();
 }

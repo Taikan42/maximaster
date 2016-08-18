@@ -117,7 +117,7 @@ class Catalog extends \CBitrixComponent
                 $FilterFoElements,
                 false,
                 Array(
-                    "nPageSize"=> 5,
+                    "nPageSize"=> 3,
                     "iNumPage"=> ($page ? $page : 1) ,
                     "bShowAll"=> false
                 ),
